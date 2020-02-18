@@ -1,0 +1,10 @@
+name: Captcha
+version: 1.0
+description: Bots are now the past
+main: me.kyllian.captcha.CaptchaPlugin
+api-version: 1.15
+
+commands:
+  captcha:
+    usage: /<command>
+    description: Main command of the Captcha plugin
