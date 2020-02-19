@@ -23,6 +23,12 @@ public class CaptchaHandler {
         if (player.isOp()) throw new IllegalStateException("The player has override permissions for Captcha");
         Captcha captcha = captchaFactory.getCaptcha(player);
         playerData.setAssignedCaptcha(captcha);
+        playerData.setBackupItem(player.getInventory().getItemInMainHand());
         captcha.send();
+    }
+
+    public void removeAssignedCaptcha(Player player) {
+        PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
+        player.getInventory().setItemInMainHand(playerData.getBackupItem());
     }
 }

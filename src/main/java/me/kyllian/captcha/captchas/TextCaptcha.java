@@ -50,6 +50,17 @@ public class TextCaptcha implements Captcha {
 
     }
 
+    @Override
+    public CaptchaType getType() {
+        return CaptchaType.TEXTCAPTCHA;
+    }
+
+    @Override
+    public String getAnswer() {
+        return this.answer;
+    }
+
+    @Override
     public void send() {
         plugin.getMapHandler().sendMap(player, image);
     }
