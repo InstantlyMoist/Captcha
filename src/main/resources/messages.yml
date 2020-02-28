@@ -1,0 +1,3 @@
+kick: '&7You failed the Captcha\n\n&7Please consider trying again'
+fail: '&7You failed the Captcha'
+success: '&7You completed the Captcha'

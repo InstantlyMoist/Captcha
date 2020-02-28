@@ -3,9 +3,9 @@
   <component name="CompilerConfiguration">
     <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+      <profile name="Annotation profile for Captcha" enabled="true">
+        <sourceOutputDir name="server/plugins/generated-sources/annotations" />
+        <sourceTestOutputDir name="server/plugins/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Captcha" />
       </profile>

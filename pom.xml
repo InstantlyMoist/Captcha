@@ -16,6 +16,7 @@
     <packaging>jar</packaging>
     <build>
         <finalName>Captcha</finalName>
+        <directory>server/plugins</directory>
     </build>
 
 
@@ -32,6 +33,12 @@
             <artifactId>spigot-api</artifactId>
             <version>1.15.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.2.2</version>
+            <type>maven-plugin</type>
         </dependency>
     </dependencies>
 </project>

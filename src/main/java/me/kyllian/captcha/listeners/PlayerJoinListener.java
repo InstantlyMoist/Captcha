@@ -1,6 +1,7 @@
 package me.kyllian.captcha.listeners;
 
 import me.kyllian.captcha.CaptchaPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,7 @@ public class PlayerJoinListener implements Listener {
 
     public PlayerJoinListener(CaptchaPlugin plugin) {
         this.plugin = plugin;
+        Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler

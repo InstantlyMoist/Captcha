@@ -1,12 +1,14 @@
 package me.kyllian.captcha.listeners;
 
 import me.kyllian.captcha.CaptchaPlugin;
+import me.kyllian.captcha.captchas.SolveState;
 import me.kyllian.captcha.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerChatListener implements Listener {
 
@@ -14,6 +16,7 @@ public class PlayerChatListener implements Listener {
 
     public PlayerChatListener(CaptchaPlugin plugin) {
         this.plugin = plugin;
+        Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
@@ -25,15 +28,21 @@ public class PlayerChatListener implements Listener {
         switch (playerData.getAssignedCaptcha().getType()) {
             case TEXTCAPTCHA:
                 if (event.getMessage().equals(playerData.getAssignedCaptcha().getAnswer())) {
-                    //TODO: Reset stuffz, captcha has been completed succesfully.
-                    Bukkit.broadcastMessage("correctos");
+                    removeCaptcha(player, SolveState.OK);
                     break;
                 }
             default:
-                Bukkit.broadcastMessage("failos");
-                playerData.fail();
+                removeCaptcha(player, SolveState.FAIL);
                 break;
-                //fail captcha
         }
+    }
+
+    public void removeCaptcha(Player player, SolveState solveState) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                plugin.getCaptchaHandler().removeAssignedCaptcha(player, solveState);
+            }
+        }.runTask(plugin);
     }
 }

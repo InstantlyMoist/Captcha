@@ -22,7 +22,6 @@ public class PlayerData {
     }
 
     public void removeAssignedCaptcha() {
-        //TODO: Maybe use #setAssignedCaptcha for this, depending on my code structure this might finish the handling of the data...
         this.assignedCaptcha = null;
     }
 
