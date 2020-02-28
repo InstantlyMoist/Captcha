@@ -20,15 +20,17 @@ public class CaptchaHandler {
     public void assignCaptcha(Player player) throws IllegalStateException {
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) throw new IllegalStateException("The player is already solving a captcha");
-        if (player.isOp()) throw new IllegalStateException("The player has override permissions for Captcha");
+        //if (player.isOp()) throw new IllegalStateException("The player has override permissions for Captcha");
         Captcha captcha = captchaFactory.getCaptcha(player);
         playerData.setAssignedCaptcha(captcha);
         playerData.setBackupItem(player.getInventory().getItemInMainHand());
         captcha.send();
+        player.sendMessage(plugin.getMessageHandler().getMessage("join"));
     }
 
     public void removeAssignedCaptcha(Player player, SolveState solveState) {
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
+        plugin.getMapHandler().resetMap(player.getInventory().getItemInMainHand());
         player.getInventory().setItemInMainHand(playerData.getBackupItem());
         playerData.removeAssignedCaptcha();
         if (solveState == SolveState.OK) {

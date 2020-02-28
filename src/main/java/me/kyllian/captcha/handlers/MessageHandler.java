@@ -12,8 +12,9 @@ public class MessageHandler {
 
     private CaptchaPlugin plugin;
 
-    private FileConfiguration fileConfiguration;
     private File file;
+    private FileConfiguration fileConfiguration;
+
 
     public MessageHandler(CaptchaPlugin plugin) {
         this.plugin = plugin;
