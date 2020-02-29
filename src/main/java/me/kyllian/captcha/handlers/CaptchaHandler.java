@@ -6,6 +6,7 @@ import me.kyllian.captcha.captchas.CaptchaFactory;
 import me.kyllian.captcha.captchas.SolveState;
 import me.kyllian.captcha.player.PlayerData;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class CaptchaHandler {
 
@@ -26,6 +27,13 @@ public class CaptchaHandler {
         playerData.setBackupItem(player.getInventory().getItemInMainHand());
         captcha.send();
         player.sendMessage(plugin.getMessageHandler().getMessage("join"));
+        playerData.setDelayedTask(new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (isCancelled()) return;
+                removeAssignedCaptcha(player, SolveState.FAIL);
+            }
+        }.runTaskLater(plugin, plugin.getConfig().getLong("captcha-settings.time")));
     }
 
     public void removeAssignedCaptcha(Player player, SolveState solveState) {
@@ -33,17 +41,14 @@ public class CaptchaHandler {
         plugin.getMapHandler().resetMap(player.getInventory().getItemInMainHand());
         player.getInventory().setItemInMainHand(playerData.getBackupItem());
         playerData.removeAssignedCaptcha();
-        if (solveState == SolveState.OK) {
-            player.sendMessage(plugin.getMessageHandler().getMessage("success"));
-            //TODO: Find usage for this, maybe send some kind of cool message
-        }
+        playerData.cancel();
+        player.sendMessage(plugin.getMessageHandler().getMessage(solveState == SolveState.OK ? "success" : "fail"));
         if (solveState == SolveState.FAIL) {
             playerData.fail();
             if (playerData.getFails() >= plugin.getConfig().getInt("captcha-settings.attempts")) {
                 player.kickPlayer(plugin.getMessageHandler().getMessage("kick"));
                 return;
             }
-            player.sendMessage(plugin.getMessageHandler().getMessage("fail"));
             this.assignCaptcha(player);
         }
     }

@@ -4,3 +4,4 @@
 
 captcha-settings:
   attempts: 3
+  time: 600

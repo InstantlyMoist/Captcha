@@ -5,8 +5,7 @@ import me.kyllian.captcha.handlers.CaptchaHandler;
 import me.kyllian.captcha.handlers.MapHandler;
 import me.kyllian.captcha.handlers.MessageHandler;
 import me.kyllian.captcha.handlers.PlayerDataHandler;
-import me.kyllian.captcha.listeners.PlayerChatListener;
-import me.kyllian.captcha.listeners.PlayerJoinListener;
+import me.kyllian.captcha.listeners.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CaptchaPlugin extends JavaPlugin {
@@ -20,6 +19,9 @@ public class CaptchaPlugin extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
 
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
         captchaHandler = new CaptchaHandler(this);
         mapHandler = new MapHandler(this);
         messageHandler = new MessageHandler(this);
@@ -27,13 +29,15 @@ public class CaptchaPlugin extends JavaPlugin {
 
         loadListeners();
 
-
         getCommand("captcha").setExecutor(new CaptchaCommand(this));
     }
 
     public void loadListeners() {
         new PlayerChatListener(this);
+        new PlayerInteractListener(this);
+        new PlayerItemHeldListener(this);
         new PlayerJoinListener(this);
+        new PlayerMoveListener(this);
     }
 
     public CaptchaHandler getCaptchaHandler() {
