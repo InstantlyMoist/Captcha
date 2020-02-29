@@ -42,6 +42,7 @@ public class CaptchaHandler {
         player.getInventory().setItemInMainHand(playerData.getBackupItem());
         playerData.removeAssignedCaptcha();
         playerData.cancel();
+        if (solveState == SolveState.LEAVE) return;
         player.sendMessage(plugin.getMessageHandler().getMessage(solveState == SolveState.OK ? "success" : "fail"));
         if (solveState == SolveState.FAIL) {
             playerData.fail();

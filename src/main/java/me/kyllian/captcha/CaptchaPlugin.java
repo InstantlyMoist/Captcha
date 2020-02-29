@@ -1,10 +1,7 @@
 package me.kyllian.captcha;
 
 import me.kyllian.captcha.commands.CaptchaCommand;
-import me.kyllian.captcha.handlers.CaptchaHandler;
-import me.kyllian.captcha.handlers.MapHandler;
-import me.kyllian.captcha.handlers.MessageHandler;
-import me.kyllian.captcha.handlers.PlayerDataHandler;
+import me.kyllian.captcha.handlers.*;
 import me.kyllian.captcha.listeners.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,11 +35,13 @@ public class CaptchaPlugin extends JavaPlugin {
         new PlayerItemHeldListener(this);
         new PlayerJoinListener(this);
         new PlayerMoveListener(this);
+        new PlayerQuitListener(this);
     }
 
     public CaptchaHandler getCaptchaHandler() {
         return captchaHandler;
     }
+
 
     public MapHandler getMapHandler() {
         return mapHandler;

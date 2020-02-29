@@ -2,5 +2,5 @@ package me.kyllian.captcha.captchas;
 
 public enum SolveState {
 
-    OK, FAIL
+    OK, FAIL, LEAVE
 }

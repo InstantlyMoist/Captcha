@@ -2,14 +2,14 @@ package me.kyllian.captcha.captchas;
 
 import me.kyllian.captcha.CaptchaPlugin;
 import org.apache.commons.lang.RandomStringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TextCaptcha implements Captcha {
@@ -18,6 +18,8 @@ public class TextCaptcha implements Captcha {
     private Player player;
     private BufferedImage image;
     private String answer;
+
+    private final int OFFSET = 5;
 
     public TextCaptcha(CaptchaPlugin plugin, Player player) {
         this.plugin = plugin;
@@ -35,6 +37,14 @@ public class TextCaptcha implements Captcha {
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0, 0, 128, 128);
 
+        try {
+            BufferedImage background = ImageIO.read(plugin.getResource("background.png"));
+            AffineTransform affineTransform = new AffineTransform();
+            graphics.drawImage(background, affineTransform, null);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         int lines = ThreadLocalRandom.current().nextInt(10, 25);
         while (lines != 0) {
             graphics.setColor(getRandomColor());
@@ -42,8 +52,8 @@ public class TextCaptcha implements Captcha {
             graphics.drawLine(getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate());
         }
 
-        final String TYPE_TEXT = "Type the text you see";
-        graphics.drawString(TYPE_TEXT, 128 / 2 - ((int) graphics.getFontMetrics().getStringBounds(TYPE_TEXT, graphics).getWidth()) / 2, 10);
+
+
         graphics.setFont(new Font("Arial", Font.PLAIN, 34));
 
         for (int i = 0; i != split.length; i++) {
@@ -54,8 +64,8 @@ public class TextCaptcha implements Captcha {
             graphics.drawString(split[i], (20 * (i + 1)), 70);
             graphics.setTransform(original);
         }
-        graphics.dispose();
 
+        graphics.dispose();
     }
 
     public int getRandomCoordinate() {
