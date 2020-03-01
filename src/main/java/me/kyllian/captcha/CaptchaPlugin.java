@@ -31,6 +31,7 @@ public class CaptchaPlugin extends JavaPlugin {
 
     public void loadListeners() {
         new PlayerChatListener(this);
+        new PlayerDropItemListener(this);
         new PlayerInteractListener(this);
         new PlayerItemHeldListener(this);
         new PlayerJoinListener(this);

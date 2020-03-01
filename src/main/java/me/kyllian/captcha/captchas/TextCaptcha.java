@@ -32,6 +32,8 @@ public class TextCaptcha implements Captcha {
         canvas.setSize(128, 128);
 
         Graphics2D graphics = (Graphics2D) image.getGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         canvas.paint(graphics);
 
         graphics.setColor(Color.WHITE);
