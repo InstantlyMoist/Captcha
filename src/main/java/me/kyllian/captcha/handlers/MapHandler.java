@@ -37,13 +37,14 @@ public class MapHandler {
         if (!file.exists()) plugin.saveResource("maps.yml", false);
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
         List<Integer> maps = fileConfiguration.getIntegerList("maps");
-        if (maps.isEmpty()) {
-            //TODO: Gen new maps
+        int mapAmount = plugin.getConfig().getInt("captcha-settings.maps");
+        int currentMapAmount = maps.size();
+        if (mapAmount > currentMapAmount) {
             Bukkit.getLogger().info("Captcha didn't find existing, predefined maps. Generating them, this may take some time...");
             World world = Bukkit.getWorld("world");
-            for (int i = 0; i != 5; i++) {
+            for (int i = 0; i != mapAmount - currentMapAmount; i++) {
                 MapView mapView = Bukkit.createMap(world);
-                maps.add(mapView.getId());
+                maps.add((int) mapView.getId());
                 Bukkit.getLogger().info("Added " + mapView.getId());
             }
             fileConfiguration.set("maps", maps);
@@ -53,20 +54,12 @@ public class MapHandler {
                 exception.printStackTrace();
             }
         }
-
         maps.forEach(mapID -> {
-            //TODO: Load the itemstack for later usage.
-            ItemStack map = new ItemStack(Material.FILLED_MAP);
-
-            MapMeta mapMeta = (MapMeta) map.getItemMeta();
-            mapMeta.setMapId(mapID);
-            map.setItemMeta(mapMeta);
-
+            ItemStack map = new ItemStack(Material.MAP);
+            map.setDurability(mapID.shortValue());
             mapsUsing.put(map, false);
         });
         Bukkit.getLogger().info("Loaded maps " + mapsUsing);
-
-        //TODO: Check if plugin has loaded maps already, maps.yml?
     }
 
     public void sendMap(Player player, BufferedImage image) {
@@ -79,25 +72,18 @@ public class MapHandler {
 
         mapsUsing.put(map, true);
 
-        MapMeta mapMeta = (MapMeta) map.getItemMeta();
-        MapView mapView = mapMeta.getMapView();
-
-        for (MapRenderer mapRenderer : mapView.getRenderers()) mapView.removeRenderer(mapRenderer);
+        MapView mapView = Bukkit.getMap(map.getDurability());
+        mapView.getRenderers().clear();
 
         mapView.addRenderer(new MapRenderer() {
-            public boolean rendered=false;
+            boolean rendered = false;
             @Override
             public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
-                if(rendered)
-                    return;
+                if (rendered) return;
                 mapCanvas.drawImage(0, 0, image);
-                rendered=true;
+                rendered = true;
             }
         });
-
-        mapMeta.setMapView(mapView);
-        map.setItemMeta(mapMeta);
-
         player.getInventory().setItemInMainHand(map);
     }
 

@@ -3,5 +3,6 @@
 # For support consider joining my discord: https://discord.gg/zgKr2YM
 
 captcha-settings:
+  maps: 1000
   attempts: 3
   time: 600
