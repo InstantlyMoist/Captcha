@@ -85,9 +85,13 @@ public class MapHandler {
         for (MapRenderer mapRenderer : mapView.getRenderers()) mapView.removeRenderer(mapRenderer);
 
         mapView.addRenderer(new MapRenderer() {
+            public boolean rendered=false;
             @Override
             public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
+                if(rendered)
+                    return;
                 mapCanvas.drawImage(0, 0, image);
+                rendered=true;
             }
         });
 
