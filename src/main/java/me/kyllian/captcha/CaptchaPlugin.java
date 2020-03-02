@@ -20,7 +20,7 @@ public class CaptchaPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        //Metrics metrics = new Metrics(this, 12);
+        Metrics metrics = new Metrics(this, 75668);
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
