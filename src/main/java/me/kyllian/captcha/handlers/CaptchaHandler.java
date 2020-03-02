@@ -63,6 +63,5 @@ public class CaptchaHandler {
                 onlinePlayer.kickPlayer(plugin.getMessageHandler().getMessage("reload-kick"));
             }
         }
-        //TODO
     }
 }

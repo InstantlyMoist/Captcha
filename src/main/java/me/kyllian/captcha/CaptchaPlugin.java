@@ -19,6 +19,7 @@ public class CaptchaPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
+        //Metrics metrics = new Metrics(this, );
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
@@ -31,6 +32,13 @@ public class CaptchaPlugin extends JavaPlugin {
         loadListeners();
 
         getCommand("captcha").setExecutor(new CaptchaCommand(this));
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+
+        captchaHandler.removeAllCaptchas();
     }
 
     public void loadListeners() {

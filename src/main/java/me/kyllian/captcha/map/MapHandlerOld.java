@@ -48,7 +48,6 @@ public class MapHandlerOld implements MapHandler {
             for (int i = 0; i != mapAmount - currentMapAmount; i++) {
                 MapView mapView = Bukkit.createMap(world);
                 maps.add((int) mapView.getId());
-                Bukkit.getLogger().info("Added " + mapView.getId());
             }
             fileConfiguration.set("maps", maps);
             world.save();
@@ -63,7 +62,6 @@ public class MapHandlerOld implements MapHandler {
             map.setDurability(mapID.shortValue());
             mapsUsing.put(map, false);
         });
-        Bukkit.getLogger().info("Loaded maps " + mapsUsing);
     }
 
     public void sendMap(Player player, BufferedImage image) {
