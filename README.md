@@ -14,4 +14,4 @@ This plugin works in minecraft versions 1.7 - 1.16
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-TODO
+[License](https://github.com/InstantlyMoist/Captcha/blob/master/LICENSE)
