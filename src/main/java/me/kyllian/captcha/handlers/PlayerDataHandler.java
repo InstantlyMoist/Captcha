@@ -12,12 +12,9 @@ public class PlayerDataHandler {
 
     private Map<UUID, PlayerData> playerDataMap;
 
-    public PlayerDataHandler() { //TODO: Make sure it gets loaded on player join.
+    public PlayerDataHandler() {
         playerDataMap = new HashMap<>();
         Bukkit.getOnlinePlayers().forEach(player -> loadPlayerDataFromPlayer(player));
-        //TODO: Handle reloading data from players by loading their files
-        //TODO: Consider using a config file per-player. Causing for more open configuration to be possible.
-        //TODO: Consider reading data real-time, for having better functionality but slower performance... (A player reload command might be nessecary)
     }
 
     public void loadPlayerDataFromPlayer(Player player) {

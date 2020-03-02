@@ -7,6 +7,7 @@ import me.kyllian.captcha.handlers.MessageHandler;
 import me.kyllian.captcha.handlers.PlayerDataHandler;
 import me.kyllian.captcha.listeners.*;
 import me.kyllian.captcha.map.MapHandlerFactory;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CaptchaPlugin extends JavaPlugin {
@@ -19,7 +20,7 @@ public class CaptchaPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        //Metrics metrics = new Metrics(this, );
+        //Metrics metrics = new Metrics(this, 12);
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
