@@ -6,6 +6,7 @@ import me.kyllian.captcha.handlers.MapHandler;
 import me.kyllian.captcha.handlers.MessageHandler;
 import me.kyllian.captcha.handlers.PlayerDataHandler;
 import me.kyllian.captcha.listeners.*;
+import me.kyllian.captcha.map.MapHandlerFactory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CaptchaPlugin extends JavaPlugin {
@@ -23,7 +24,7 @@ public class CaptchaPlugin extends JavaPlugin {
         saveDefaultConfig();
 
         captchaHandler = new CaptchaHandler(this);
-        mapHandler = new MapHandler(this);
+        mapHandler = new MapHandlerFactory(this).getMapHandler();
         messageHandler = new MessageHandler(this);
         playerDataHandler = new PlayerDataHandler();
 
