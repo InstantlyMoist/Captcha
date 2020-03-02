@@ -1,6 +1,6 @@
 # Captcha
 
-Captcha is a [spigot](https://www.spigotmc.org/) which will prevent bots from ruining your server by giving them a challenge [captcha](https://nl.wikipedia.org/wiki/Captcha)
+Captcha is a [spigot](https://www.spigotmc.org/) plugin which will prevent bots from ruining your server by giving them a challenge [captcha](https://nl.wikipedia.org/wiki/Captcha)
 
 This plugin works in minecraft versions 1.7 - 1.16
 
