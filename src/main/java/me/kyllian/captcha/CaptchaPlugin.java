@@ -33,6 +33,7 @@ public class CaptchaPlugin extends JavaPlugin {
     }
 
     public void loadListeners() {
+        new InventoryClickListener(this);
         new PlayerChatListener(this);
         new PlayerCommandPreprocessListener(this);
         new PlayerDropItemListener(this);
@@ -41,12 +42,12 @@ public class CaptchaPlugin extends JavaPlugin {
         new PlayerJoinListener(this);
         new PlayerMoveListener(this);
         new PlayerQuitListener(this);
+
     }
 
     public CaptchaHandler getCaptchaHandler() {
         return captchaHandler;
     }
-
 
     public MapHandler getMapHandler() {
         return mapHandler;

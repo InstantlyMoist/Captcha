@@ -5,6 +5,7 @@ import me.kyllian.captcha.captchas.Captcha;
 import me.kyllian.captcha.captchas.CaptchaFactory;
 import me.kyllian.captcha.captchas.SolveState;
 import me.kyllian.captcha.player.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -52,5 +53,16 @@ public class CaptchaHandler {
             }
             this.assignCaptcha(player);
         }
+    }
+
+    public void removeAllCaptchas() {
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(onlinePlayer);
+            if (playerData.hasAssignedCaptcha()) {
+                removeAssignedCaptcha(onlinePlayer, SolveState.LEAVE);
+                onlinePlayer.kickPlayer(plugin.getMessageHandler().getMessage("reload-kick"));
+            }
+        }
+        //TODO
     }
 }

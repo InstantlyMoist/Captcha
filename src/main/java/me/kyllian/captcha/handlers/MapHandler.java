@@ -32,6 +32,10 @@ public class MapHandler {
 
     public MapHandler(CaptchaPlugin plugin) {
         this.plugin = plugin;
+        loadData();
+    }
+
+    public void loadData() {
         mapsUsing = new HashMap<>();
         file = new File(plugin.getDataFolder(), "maps.yml");
         if (!file.exists()) plugin.saveResource("maps.yml", false);
@@ -48,6 +52,7 @@ public class MapHandler {
                 Bukkit.getLogger().info("Added " + mapView.getId());
             }
             fileConfiguration.set("maps", maps);
+            world.save();
             try {
                 fileConfiguration.save(file);
             } catch (IOException exception) {

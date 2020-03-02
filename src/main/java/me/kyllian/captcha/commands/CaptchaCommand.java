@@ -4,7 +4,6 @@ import me.kyllian.captcha.CaptchaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class CaptchaCommand implements CommandExecutor {
 
@@ -16,13 +15,19 @@ public class CaptchaCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String commandLabel, String[] args) {
-        //TODO: Write command structure
-        Player player = (Player) commandSender;
-        try {
-            plugin.getCaptchaHandler().assignCaptcha(player);
-        } catch (IllegalStateException exception) {
-            exception.printStackTrace();
+        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+            if (!commandSender.hasPermission("captcha.reload")) {
+                commandSender.sendMessage(plugin.getMessageHandler().getMessage("no-permission"));
+                return true;
+            }
+            plugin.getCaptchaHandler().removeAllCaptchas();
+            plugin.reloadConfig();
+            plugin.getMessageHandler().reload();
+            plugin.getMapHandler().loadData();
+            commandSender.sendMessage(plugin.getMessageHandler().getMessage("reload"));
+            return true;
         }
+        commandSender.sendMessage(plugin.getMessageHandler().getMessage("help"));
         return true;
     }
 }
