@@ -4,6 +4,8 @@ Captcha is a [spigot](https://www.spigotmc.org/) plugin which will prevent bots 
 
 This plugin works in minecraft versions 1.7 - 1.16
 
+![The Captcha](https://i.imgur.com/eYiqHuQ.png)
+
 ## Installation
 
 1. Download JAR file
