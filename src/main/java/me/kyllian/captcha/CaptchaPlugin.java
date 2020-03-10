@@ -20,10 +20,12 @@ public class CaptchaPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        Metrics metrics = new Metrics(this, 75668);
+        Metrics metrics = new Metrics(this, 75891);
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+
+        saveResource("background.png", false);
 
         captchaHandler = new CaptchaHandler(this);
         mapHandler = new MapHandlerFactory(this).getMapHandler();

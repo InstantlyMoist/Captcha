@@ -7,9 +7,7 @@ import org.bukkit.entity.Player;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TextCaptcha implements Captcha {
@@ -47,14 +45,16 @@ public class TextCaptcha implements Captcha {
             exception.printStackTrace();
         }
 
-        int lines = ThreadLocalRandom.current().nextInt(10, 25);
-        while (lines != 0) {
-            graphics.setColor(getRandomColor());
-            lines--;
-            graphics.drawLine(getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate());
+        boolean color = plugin.getConfig().getBoolean("captcha-settings.color");
+
+        if (plugin.getConfig().getBoolean("captcha-settings.lines")) {
+            int lines = ThreadLocalRandom.current().nextInt(10, 25);
+            while (lines != 0) {
+                graphics.setColor(color ? getRandomColor() : Color.DARK_GRAY);
+                lines--;
+                graphics.drawLine(getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate());
+            }
         }
-
-
 
         graphics.setFont(new Font("Arial", Font.PLAIN, 34));
 
@@ -62,7 +62,7 @@ public class TextCaptcha implements Captcha {
             AffineTransform original = graphics.getTransform();
             int rotation = ThreadLocalRandom.current().nextInt(0, 45);
             graphics.rotate(Math.toRadians(rotation) * (ThreadLocalRandom.current().nextBoolean() ? 1 : -1), 10 + (20 * (i + 1)), 64);
-            graphics.setColor(getRandomColor());
+            graphics.setColor(color ? getRandomColor() : Color.BLACK);
             graphics.drawString(split[i], (20 * (i + 1)), 70);
             graphics.setTransform(original);
         }

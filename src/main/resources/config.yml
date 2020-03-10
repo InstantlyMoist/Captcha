@@ -4,5 +4,7 @@
 
 captcha-settings:
   attempts: 3
+  color: false
+  lines: true
   maps: 1000
   time: 600
