@@ -1,7 +1,10 @@
 fail: '&7You failed the Captcha'
 help: '&7/captcha reload'
 join: '&7Please type the text on the map in order to verify you''re a human being'
-kick: '&6You have lost connection to the server'
+kick:
+  - '&7You have been kicked!'
+  - ''
+  - '&7Please try again'
 no-permission: '&cYou don''t have permission'
 reload: '&7Reloaded Captcha'
 reload-kick: '&6You have lost connection to the server'

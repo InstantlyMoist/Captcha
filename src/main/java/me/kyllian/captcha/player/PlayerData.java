@@ -46,6 +46,10 @@ public class PlayerData {
         }
     }
 
+    public void reloadData() {
+        fileConfiguration = YamlConfiguration.loadConfiguration(file);
+    }
+
     public void saveData() {
         try {
             fileConfiguration.save(file);
