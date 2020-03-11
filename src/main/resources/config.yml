@@ -7,6 +7,7 @@ captcha-settings:
   color: false
   lines: true
   maps: 1000
+  mode: FIRSTJOIN # FIRSTJOIN, ALL, NONE
   op-override: false
   permission-override: false
   time: 600

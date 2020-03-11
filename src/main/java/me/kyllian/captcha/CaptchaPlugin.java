@@ -37,9 +37,7 @@ public class CaptchaPlugin extends JavaPlugin {
 
         getCommand("captcha").setExecutor(new CaptchaCommand(this));
 
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            playerDataHandler.loadPlayerDataFromPlayer(player);
-        });
+        Bukkit.getOnlinePlayers().forEach(playerDataHandler::loadPlayerDataFromPlayer);
     }
 
     @Override

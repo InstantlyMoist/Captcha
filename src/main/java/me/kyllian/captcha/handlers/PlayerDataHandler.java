@@ -2,7 +2,6 @@ package me.kyllian.captcha.handlers;
 
 import me.kyllian.captcha.CaptchaPlugin;
 import me.kyllian.captcha.player.PlayerData;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -19,7 +18,6 @@ public class PlayerDataHandler {
     public PlayerDataHandler(CaptchaPlugin plugin) {
         this.plugin = plugin;
         playerDataMap = new HashMap<>();
-        Bukkit.getOnlinePlayers().forEach(player -> loadPlayerDataFromPlayer(player));
 
         playerFolder = new File(plugin.getDataFolder(), "players");
         if (!playerFolder.exists()) playerFolder.mkdir();

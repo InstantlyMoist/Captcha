@@ -17,13 +17,14 @@
     <packaging>jar</packaging>
     <build>
         <finalName>Captcha</finalName>
-        <directory>server/plugins</directory>
+        <directory>server/plugins/temp</directory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
+                    <outputFile>server/plugins/Captcha.jar</outputFile>
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>

@@ -27,18 +27,32 @@ public class PlayerData {
 
     public PlayerData(CaptchaPlugin plugin, Player player) {
         this.plugin = plugin;
-        file = new File(plugin.getPlayerDataHandler().getPlayerFolder(), player.getUniqueId().toString() + ".yml");
+        file = new File(
+                plugin.getPlayerDataHandler().getPlayerFolder(),
+                player.getUniqueId().toString() + ".yml");
         try {
             if (!file.exists()) {
                 file.createNewFile();
+                fileConfiguration = YamlConfiguration.loadConfiguration(file);
+                fileConfiguration.set("passed", false);
+                fileConfiguration.set("total-fails", 0);
+                saveData();
+            } else {
+                fileConfiguration = YamlConfiguration.loadConfiguration(file);
             }
         } catch (IOException exception) {
             Bukkit.getLogger().info("[Captcha] An error occured, please report the following error:");
             exception.printStackTrace();
         }
-        fileConfiguration = YamlConfiguration.loadConfiguration(file);
-        fileConfiguration.addDefault("passed", false);
-        fileConfiguration.addDefault("total-fails", 0);
+    }
+
+    public void saveData() {
+        try {
+            fileConfiguration.save(file);
+        } catch (IOException exception) {
+            Bukkit.getLogger().info("[Captcha] An error occured, please report the following error:");
+            exception.printStackTrace();
+        }
     }
 
     public boolean hasAssignedCaptcha() {
@@ -66,12 +80,14 @@ public class PlayerData {
             fail();
         } else if (solveState == SolveState.OK) {
             fileConfiguration.set("passed", true);
+            saveData();
         }
     }
 
     public void fail() {
         fileConfiguration.set("total-fails", fileConfiguration.getInt("total-fails") + 1);
         fileConfiguration.set("passed", false);
+        saveData();
         this.fails++;
     }
 
@@ -90,5 +106,9 @@ public class PlayerData {
 
     public void cancel() {
         delayedTask.cancel();
+    }
+
+    public boolean hasPassed() {
+        return fileConfiguration.getBoolean("passed");
     }
 }
