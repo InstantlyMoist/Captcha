@@ -31,7 +31,7 @@ public class CaptchaPlugin extends JavaPlugin {
         captchaHandler = new CaptchaHandler(this);
         mapHandler = new MapHandlerFactory(this).getMapHandler();
         messageHandler = new MessageHandler(this);
-        playerDataHandler = new PlayerDataHandler();
+        playerDataHandler = new PlayerDataHandler(this);
 
         loadListeners();
 

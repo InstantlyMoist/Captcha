@@ -1,7 +1,6 @@
 package me.kyllian.captcha.listeners;
 
 import me.kyllian.captcha.CaptchaPlugin;
-import me.kyllian.captcha.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +20,6 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         plugin.getPlayerDataHandler().loadPlayerDataFromPlayer(player);
-        //PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         try {
             plugin.getCaptchaHandler().assignCaptcha(player);
         } catch (IllegalStateException exception) {
