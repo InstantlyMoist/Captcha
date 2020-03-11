@@ -21,6 +21,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        if (player.hasPermission("captcha.update")) plugin.getUpdateHandler().handleUpdateMessage(player);
         plugin.getPlayerDataHandler().loadPlayerDataFromPlayer(player);
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         Mode mode = Mode.valueOf(plugin.getConfig().getString("captcha-settings.mode"));

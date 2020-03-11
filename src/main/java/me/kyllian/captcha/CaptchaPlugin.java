@@ -1,10 +1,7 @@
 package me.kyllian.captcha;
 
 import me.kyllian.captcha.commands.CaptchaCommand;
-import me.kyllian.captcha.handlers.CaptchaHandler;
-import me.kyllian.captcha.handlers.MapHandler;
-import me.kyllian.captcha.handlers.MessageHandler;
-import me.kyllian.captcha.handlers.PlayerDataHandler;
+import me.kyllian.captcha.handlers.*;
 import me.kyllian.captcha.listeners.*;
 import me.kyllian.captcha.map.MapHandlerFactory;
 import org.bstats.bukkit.Metrics;
@@ -17,6 +14,7 @@ public class CaptchaPlugin extends JavaPlugin {
     private MapHandler mapHandler;
     private MessageHandler messageHandler;
     private PlayerDataHandler playerDataHandler;
+    private UpdateHandler updateHandler;
 
     @Override
     public void onEnable() {
@@ -32,6 +30,7 @@ public class CaptchaPlugin extends JavaPlugin {
         mapHandler = new MapHandlerFactory(this).getMapHandler();
         messageHandler = new MessageHandler(this);
         playerDataHandler = new PlayerDataHandler(this);
+        updateHandler = new UpdateHandler(this);
 
         loadListeners();
 
@@ -74,5 +73,9 @@ public class CaptchaPlugin extends JavaPlugin {
 
     public PlayerDataHandler getPlayerDataHandler() {
         return playerDataHandler;
+    }
+
+    public UpdateHandler getUpdateHandler() {
+        return updateHandler;
     }
 }

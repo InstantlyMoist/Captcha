@@ -11,3 +11,4 @@ captcha-settings:
   op-override: false
   permission-override: false
   time: 600
+  update-message: true

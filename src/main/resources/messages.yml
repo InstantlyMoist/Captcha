@@ -9,3 +9,7 @@ no-permission: '&cYou don''t have permission'
 reload: '&7Reloaded Captcha'
 reload-kick: '&6You have lost connection to the server'
 success: '&7You completed the Captcha'
+update:
+  - 'A new update has been found!'
+  - ''
+  - 'Get it at: https://www.spigotmc.org/resources/captcha.75891/'
