@@ -22,7 +22,8 @@ public class CaptchaHandler {
     public void assignCaptcha(Player player) throws IllegalStateException {
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) throw new IllegalStateException("The player is already solving a captcha");
-        //if (player.isOp()) throw new IllegalStateException("The player has override permissions for Captcha");
+        if ((player.isOp() && plugin.getConfig().getBoolean("captcha-settings.op-override"))
+                || player.hasPermission("captcha.override") && plugin.getConfig().getBoolean("captcha-settings.permission-override")) return;
         Captcha captcha = captchaFactory.getCaptcha(player);
         playerData.setAssignedCaptcha(captcha);
         playerData.setBackupItem(player.getInventory().getItemInMainHand());
@@ -43,10 +44,10 @@ public class CaptchaHandler {
         player.getInventory().setItemInMainHand(playerData.getBackupItem());
         playerData.removeAssignedCaptcha();
         playerData.cancel();
+        playerData.handleSolveState(solveState);
         if (solveState == SolveState.LEAVE) return;
         player.sendMessage(plugin.getMessageHandler().getMessage(solveState == SolveState.OK ? "success" : "fail"));
         if (solveState == SolveState.FAIL) {
-            playerData.fail();
             if (playerData.getFails() >= plugin.getConfig().getInt("captcha-settings.attempts")) {
                 player.kickPlayer(plugin.getMessageHandler().getMessage("kick"));
                 return;

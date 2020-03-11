@@ -8,6 +8,7 @@ import me.kyllian.captcha.handlers.PlayerDataHandler;
 import me.kyllian.captcha.listeners.*;
 import me.kyllian.captcha.map.MapHandlerFactory;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CaptchaPlugin extends JavaPlugin {
@@ -30,11 +31,13 @@ public class CaptchaPlugin extends JavaPlugin {
         captchaHandler = new CaptchaHandler(this);
         mapHandler = new MapHandlerFactory(this).getMapHandler();
         messageHandler = new MessageHandler(this);
-        playerDataHandler = new PlayerDataHandler();
+        playerDataHandler = new PlayerDataHandler(this);
 
         loadListeners();
 
         getCommand("captcha").setExecutor(new CaptchaCommand(this));
+
+        Bukkit.getOnlinePlayers().forEach(playerDataHandler::loadPlayerDataFromPlayer);
     }
 
     @Override

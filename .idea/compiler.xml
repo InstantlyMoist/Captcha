@@ -4,8 +4,8 @@
     <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
       <profile name="Annotation profile for Captcha" enabled="true">
-        <sourceOutputDir name="server/plugins/generated-sources/annotations" />
-        <sourceTestOutputDir name="server/plugins/generated-test-sources/test-annotations" />
+        <sourceOutputDir name="server/plugins/temp/generated-sources/annotations" />
+        <sourceTestOutputDir name="server/plugins/temp/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Captcha" />
       </profile>

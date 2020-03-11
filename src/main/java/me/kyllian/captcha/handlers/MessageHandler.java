@@ -1,12 +1,12 @@
 package me.kyllian.captcha.handlers;
 
 import me.kyllian.captcha.CaptchaPlugin;
-import me.kyllian.captcha.captchas.Captcha;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.List;
 
 public class MessageHandler {
 
@@ -28,7 +28,11 @@ public class MessageHandler {
     }
 
     public String getMessage(String path) {
-        return translateColor(fileConfiguration.getString(path).replace("\\n", "\n"));
+        Object object = fileConfiguration.get(path);
+        String finalString = "";
+        if (object instanceof List) finalString = String.join("\n",(List<String>) object);
+        else finalString += ((String) object).replace("\\n", "\n");
+        return translateColor(finalString);
     }
 
     public static String translateColor(String message) {
