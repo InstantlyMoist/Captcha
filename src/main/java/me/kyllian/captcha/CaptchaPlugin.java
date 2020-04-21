@@ -57,6 +57,7 @@ public class CaptchaPlugin extends JavaPlugin {
         new PlayerJoinListener(this);
         new PlayerMoveListener(this);
         new PlayerQuitListener(this);
+        new PlayerSwapHandItemsListener(this);
 
     }
 
