@@ -86,7 +86,6 @@ public class MapHandlerOld implements MapHandler {
                 rendered = true;
             }
         });
-        Bukkit.broadcastMessage(map.getDurability() + "");
         player.getInventory().setItemInMainHand(map);
     }
 
