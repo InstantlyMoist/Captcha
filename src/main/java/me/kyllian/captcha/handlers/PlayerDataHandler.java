@@ -23,6 +23,12 @@ public class PlayerDataHandler {
         if (!playerFolder.exists()) playerFolder.mkdir();
     }
 
+    public void reloadPlayerData() {
+        playerDataMap.entrySet().forEach(playerData -> {
+            playerData.getValue().reloadData();
+        });
+    }
+
     public void loadPlayerDataFromPlayer(Player player) {
         playerDataMap.put(player.getUniqueId(), new PlayerData(plugin, player));
     }

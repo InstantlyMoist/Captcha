@@ -24,6 +24,7 @@ public class CaptchaCommand implements CommandExecutor {
             plugin.reloadConfig();
             plugin.getMessageHandler().reload();
             plugin.getMapHandler().loadData();
+            plugin.getPlayerDataHandler().reloadPlayerData();
             commandSender.sendMessage(plugin.getMessageHandler().getMessage("reload"));
             return true;
         }

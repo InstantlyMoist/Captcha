@@ -28,7 +28,11 @@ public class CaptchaHandler {
         playerData.setAssignedCaptcha(captcha);
         playerData.setBackupItem(player.getInventory().getItemInMainHand());
         captcha.send();
-        player.sendMessage(plugin.getMessageHandler().getMessage("join"));
+        new BukkitRunnable() {
+            public void run() {
+                player.sendMessage(plugin.getMessageHandler().getMessage("join"));
+            }
+        }.runTaskLater(plugin, 20);
         playerData.setDelayedTask(new BukkitRunnable() {
             @Override
             public void run() {
