@@ -3,8 +3,9 @@ version: 1.03
 description: Bots are now the past
 main: me.kyllian.captcha.CaptchaPlugin
 api-version: 1.15
+softdepend: [AuthMe]
 
 commands:
   captcha:
     usage: /<command>
-    description: Main command of the Captcha plugin
+    description: Main command of the Captcha p~lugin

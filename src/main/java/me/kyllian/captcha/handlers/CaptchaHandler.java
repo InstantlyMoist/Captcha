@@ -5,6 +5,7 @@ import me.kyllian.captcha.captchas.Captcha;
 import me.kyllian.captcha.captchas.CaptchaFactory;
 import me.kyllian.captcha.captchas.SolveState;
 import me.kyllian.captcha.player.PlayerData;
+import me.kyllian.captcha.utilities.Mode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,6 +18,20 @@ public class CaptchaHandler {
     public CaptchaHandler(CaptchaPlugin plugin) {
         this.plugin = plugin;
         captchaFactory = new CaptchaFactory(plugin);
+    }
+
+    public void login(Player player) {
+        if (player.hasPermission("captcha.update")) plugin.getUpdateHandler().handleUpdateMessage(player);
+        plugin.getPlayerDataHandler().loadPlayerDataFromPlayer(player);
+        PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
+        Mode mode = Mode.valueOf(plugin.getConfig().getString("captcha-settings.mode"));
+        if (mode == Mode.NONE) return;
+        if (mode == Mode.FIRSTJOIN && (player.hasPlayedBefore() && playerData.hasPassed())) return;
+        try {
+            plugin.getCaptchaHandler().assignCaptcha(player);
+        } catch (IllegalStateException exception) {
+            exception.printStackTrace();
+        }
     }
 
     public void assignCaptcha(Player player) throws IllegalStateException {
