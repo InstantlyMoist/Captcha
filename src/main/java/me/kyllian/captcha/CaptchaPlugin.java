@@ -3,6 +3,8 @@ package me.kyllian.captcha;
 import me.kyllian.captcha.commands.CaptchaCommand;
 import me.kyllian.captcha.handlers.*;
 import me.kyllian.captcha.listeners.*;
+import me.kyllian.captcha.listeners.login.LoginListener;
+import me.kyllian.captcha.listeners.login.PlayerJoinListener;
 import me.kyllian.captcha.map.MapHandlerFactory;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -53,7 +55,8 @@ public class CaptchaPlugin extends JavaPlugin {
         new PlayerDropItemListener(this);
         new PlayerInteractListener(this);
         new PlayerItemHeldListener(this);
-        new PlayerJoinListener(this);
+        if (Bukkit.getPluginManager().getPlugin("AuthMe") != null) new LoginListener(this);
+        else new PlayerJoinListener(this);
         new PlayerMoveListener(this);
         new PlayerQuitListener(this);
         new PlayerSwapHandItemsListener(this);
