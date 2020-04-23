@@ -3,6 +3,7 @@ package me.kyllian.captcha.listeners.login;
 import fr.xephi.authme.events.LoginEvent;
 import me.kyllian.captcha.CaptchaPlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -17,6 +18,8 @@ public class LoginListener implements Listener {
 
     @EventHandler
     public void onLogin(LoginEvent event) {
-        plugin.getCaptchaHandler().login(event.getPlayer());
+        Player player = event.getPlayer();
+        plugin.getPlayerDataHandler().loadPlayerDataFromPlayer(player);
+        plugin.getCaptchaHandler().login(player);
     }
 }
