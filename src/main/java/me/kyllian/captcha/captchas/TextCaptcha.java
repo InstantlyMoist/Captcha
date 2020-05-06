@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TextCaptcha implements Captcha {
@@ -38,7 +39,8 @@ public class TextCaptcha implements Captcha {
         graphics.fillRect(0, 0, 128, 128);
 
         try {
-            BufferedImage background = ImageIO.read(plugin.getResource("background.png"));
+            File file = new File(plugin.getDataFolder(), "background.png");
+            BufferedImage background = ImageIO.read(file);
             AffineTransform affineTransform = new AffineTransform();
             graphics.drawImage(background, affineTransform, null);
         } catch (Exception exception) {

@@ -2,12 +2,22 @@ package me.kyllian.captcha.map;
 
 import me.kyllian.captcha.CaptchaPlugin;
 import me.kyllian.captcha.handlers.MapHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.map.MapCanvas;
+import org.bukkit.map.MapRenderer;
+import org.bukkit.map.MapView;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapHandlerNew implements MapHandler {
@@ -26,7 +36,7 @@ public class MapHandlerNew implements MapHandler {
     }
 
     public void loadData() {
-        /*mapsUsing = new HashMap<>();
+        mapsUsing = new HashMap<>();
         file = new File(plugin.getDataFolder(), "maps.yml");
         if (!file.exists()) plugin.saveResource("maps.yml", false);
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -49,16 +59,14 @@ public class MapHandlerNew implements MapHandler {
             }
         }
         maps.forEach(mapID -> {
-            ItemStack map = new ItemStack(Material.FILLED_MAP);
-            MapMeta mapMeta = (MapMeta) map.getItemMeta();
-            mapMeta.setMapId(mapID);
-            map.setItemMeta(mapMeta);
+            ItemStack map = new ItemStack(Material.MAP);
+            map.setDurability(mapID.shortValue());
             mapsUsing.put(map, false);
-        });*/
+        });
     }
 
     public void sendMap(Player player, BufferedImage image) {
-        /*ItemStack map = mapsUsing.entrySet()
+        ItemStack map = mapsUsing.entrySet()
                 .stream()
                 .filter(mapValue -> !mapValue.getValue())
                 .findFirst()
@@ -67,9 +75,7 @@ public class MapHandlerNew implements MapHandler {
 
         mapsUsing.put(map, true);
 
-        MapMeta mapMeta = (MapMeta) map.getItemMeta();
-        MapView mapView = mapMeta.getMapView();
-
+        MapView mapView = Bukkit.getMap(map.getDurability());
         mapView.getRenderers().clear();
 
         mapView.addRenderer(new MapRenderer() {
@@ -81,7 +87,7 @@ public class MapHandlerNew implements MapHandler {
                 rendered = true;
             }
         });
-        player.getInventory().setItemInMainHand(map);*/
+        player.getInventory().setItemInMainHand(map);
     }
 
     public void resetMap(ItemStack map) {
