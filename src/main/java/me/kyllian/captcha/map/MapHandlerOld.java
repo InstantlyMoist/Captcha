@@ -44,7 +44,7 @@ public class MapHandlerOld implements MapHandler {
         int currentMapAmount = maps.size();
         if (mapAmount > currentMapAmount) {
             Bukkit.getLogger().info("Captcha didn't find existing, predefined maps. Generating them, this may take some time...");
-            World world = Bukkit.getWorld("world");
+            World world = Bukkit.getWorlds().get(0);
             for (int i = 0; i != mapAmount - currentMapAmount; i++) {
                 MapView mapView = Bukkit.createMap(world);
                 maps.add((int) mapView.getId());
