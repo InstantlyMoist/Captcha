@@ -2,6 +2,7 @@ package me.kyllian.captcha.handlers;
 
 import me.kyllian.captcha.CaptchaPlugin;
 import me.kyllian.captcha.player.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -34,11 +35,11 @@ public class PlayerDataHandler {
     }
 
     public PlayerData getPlayerDataFromUUID(UUID uuid) {
-        return playerDataMap.get(uuid);
+        return playerDataMap.computeIfAbsent(uuid, f -> new PlayerData(plugin, Bukkit.getPlayer(uuid)));
     }
 
     public PlayerData getPlayerDataFromPlayer(Player player) {
-        return playerDataMap.get(player.getUniqueId());
+        return getPlayerDataFromUUID(player.getUniqueId());
     }
 
     public void unloadPlayerDataFromUUID(UUID uuid) {
