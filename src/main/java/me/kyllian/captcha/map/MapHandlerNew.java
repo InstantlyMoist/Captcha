@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
@@ -59,8 +60,11 @@ public class MapHandlerNew implements MapHandler {
             }
         }
         maps.forEach(mapID -> {
-            ItemStack map = new ItemStack(Material.MAP);
-            map.setDurability(mapID.shortValue());
+            ItemStack map = new ItemStack(Material.valueOf("FILLED_MAP"));
+            MapMeta meta = (MapMeta) map.getItemMeta();
+            meta.setMapId((int) mapID.shortValue());
+            map.setItemMeta(meta);
+            //map.setDurability(mapID.shortValue());
             mapsUsing.put(map, false);
         });
     }
@@ -75,7 +79,9 @@ public class MapHandlerNew implements MapHandler {
 
         mapsUsing.put(map, true);
 
-        MapView mapView = Bukkit.getMap(map.getDurability());
+        MapMeta mapMeta = (MapMeta) map.getItemMeta();
+
+        MapView mapView = mapMeta.getMapView();
         mapView.getRenderers().clear();
 
         mapView.addRenderer(new MapRenderer() {
@@ -87,6 +93,7 @@ public class MapHandlerNew implements MapHandler {
                 rendered = true;
             }
         });
+        map.setItemMeta(mapMeta);
         player.getInventory().setItemInMainHand(map);
     }
 

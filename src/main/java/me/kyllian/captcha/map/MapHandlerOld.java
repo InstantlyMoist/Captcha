@@ -16,6 +16,7 @@ import org.bukkit.map.MapView;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +47,15 @@ public class MapHandlerOld implements MapHandler {
             Bukkit.getLogger().info("Captcha didn't find existing, predefined maps. Generating them, this may take some time...");
             World world = Bukkit.getWorlds().get(0);
             for (int i = 0; i != mapAmount - currentMapAmount; i++) {
-                MapView mapView = Bukkit.createMap(world);
-                maps.add((int) mapView.getId());
+                try {
+                    Class bukkitClass = Class.forName("org.bukkit.Bukkit");
+                    Method createMapMethod = bukkitClass.getMethod("createMap", World.class);
+                    Object mapViewObject = createMapMethod.invoke(MapView.class, world);
+                    Bukkit.broadcastMessage(mapViewObject.getClass().getMethod("getId").invoke(mapViewObject).toString());
+                    maps.add(Integer.parseInt(mapViewObject.getClass().getMethod("getId").invoke(mapViewObject).toString()));
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
             fileConfiguration.set("maps", maps);
             world.save();
@@ -58,7 +66,7 @@ public class MapHandlerOld implements MapHandler {
             }
         }
         maps.forEach(mapID -> {
-            ItemStack map = new ItemStack(Material.MAP);
+            ItemStack map = new ItemStack(Material.valueOf("MAP"));
             map.setDurability(mapID.shortValue());
             mapsUsing.put(map, false);
         });
@@ -75,6 +83,7 @@ public class MapHandlerOld implements MapHandler {
         mapsUsing.put(map, true);
 
         MapView mapView = Bukkit.getMap(map.getDurability());
+
         mapView.getRenderers().clear();
 
         mapView.addRenderer(new MapRenderer() {
