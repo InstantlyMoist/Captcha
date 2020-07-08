@@ -1,14 +1,42 @@
 # Captcha
-#
 # For support consider joining my discord: https://discord.gg/zgKr2YM
 
 captcha-settings:
+
+  # The maximum amount of attempts that a player can make at solving the captcha before being disconnected:
   attempts: 3
+
+  # ? Config comment ?
   color: false
+
+  # If the captcha should have random lines in the background to confuse bots that are able to scan maps:
   lines: true
+
+  # ? Config comment ?
   maps: 1000
-  mode: FIRSTJOIN # FIRSTJOIN, ALL, NONE
+
+  # When should a captcha be shown to a player?
+  # Available modes: FIRSTJOIN, ALL, NONE
+  mode: FIRSTJOIN
+
+  # ? Config comment ?
   op-override: false
+
+  # ? Config comment ?
   permission-override: false
+
+  # ? Config comment ?
   time: 600
-  update-message: true
+
+  # Commands that are executed by console when a captcha is closed depending on any of the three solve states.
+  # Can use %player% as a placeholder for the player's username.
+  # To have no commands sent at all, remove the command entries and put [] after the solve state(s).
+  commands-executed-by-console-per-solve-state:
+    ok:
+      - 'tell %player% You completed the captcha successfully.'
+    fail:
+      - 'say %player% failed the captcha.'
+    leave: [] # Will not execute any commands if a player has left during a captcha as there are no command entries.
+
+# Should the plugin check for updates and send an update alert message when you are running an outdated version?
+run-update-checker: true

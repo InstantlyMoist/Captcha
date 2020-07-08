@@ -25,16 +25,19 @@ public class UpdateHandler {
                  Scanner scanner = new Scanner(inputStream)) {
                 if (scanner.hasNext()) consumer.accept(scanner.next());
             } catch (IOException exception) {
-                Bukkit.getLogger().info("[Captcha] An error occured, please report the following error:");
+                Bukkit.getLogger().info("[Captcha] Unable to check for updates, as an error occured. Please report the following error:");
                 exception.printStackTrace();
             }
         });
     }
 
     public void handleUpdateMessage(Player player) {
-        if (!plugin.getConfig().getBoolean("captcha-settings.update-message")) return;
-        getLatestVersion(version -> {
-            if (!version.equalsIgnoreCase(plugin.getDescription().getVersion())) player.sendMessage(plugin.getMessageHandler().getMessage("update"));
-        });
+        if (plugin.getConfig().getBoolean("run-update-checker")) {
+            getLatestVersion(version -> {
+                if (!version.equalsIgnoreCase(plugin.getDescription().getVersion())) {
+                    player.sendMessage(plugin.getMessageHandler().getMessage("update"));
+                }
+            });
+        }
     }
 }

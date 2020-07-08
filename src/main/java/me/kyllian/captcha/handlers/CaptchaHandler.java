@@ -10,10 +10,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CaptchaHandler {
 
     private CaptchaPlugin plugin;
     private CaptchaFactory captchaFactory;
+
+    private List<String> consoleCommandsOnOkState, consoleCommandsOnFailState, consoleCommandsOnLeaveState = new ArrayList<>();
 
     public CaptchaHandler(CaptchaPlugin plugin) {
         this.plugin = plugin;
@@ -64,14 +69,48 @@ public class CaptchaHandler {
         playerData.removeAssignedCaptcha();
         playerData.cancel();
         playerData.handleSolveState(solveState);
-        if (solveState == SolveState.LEAVE) return;
-        player.sendMessage(plugin.getMessageHandler().getMessage(solveState == SolveState.OK ? "success" : "fail"));
-        if (solveState == SolveState.FAIL) {
-            if (playerData.getFails() >= plugin.getConfig().getInt("captcha-settings.attempts")) {
-                player.kickPlayer(plugin.getMessageHandler().getMessage("kick"));
-                return;
-            }
-            this.assignCaptcha(player);
+
+        switch (solveState) {
+            case LEAVE:
+                if (consoleCommandsOnLeaveState.isEmpty()) {
+                    consoleCommandsOnLeaveState = plugin.getConfig().getStringList("captcha-settings.commands-executed-by-console-per-solve-state.leave");
+                }
+
+                for (String command : consoleCommandsOnLeaveState) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
+                }
+                break;
+
+            case OK:
+                if (consoleCommandsOnOkState.isEmpty()) {
+                    consoleCommandsOnOkState = plugin.getConfig().getStringList("captcha-settings.commands-executed-by-console-per-solve-state.ok");
+                }
+
+                for (String command : consoleCommandsOnOkState) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
+                }
+
+                player.sendMessage(plugin.getMessageHandler().getMessage("success"));
+                break;
+            case FAIL:
+                player.sendMessage(plugin.getMessageHandler().getMessage("fail"));
+
+                if (playerData.getFails() >= plugin.getConfig().getInt("captcha-settings.attempts")) {
+                    if (consoleCommandsOnFailState.isEmpty()) {
+                        consoleCommandsOnFailState = plugin.getConfig().getStringList("captcha-settings.commands-executed-by-console-per-solve-state.fail");
+                    }
+
+                    for (String command : consoleCommandsOnFailState) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
+                    }
+
+                    player.kickPlayer(plugin.getMessageHandler().getMessage("kick"));
+                    return;
+                }
+                this.assignCaptcha(player);
+                break;
+            default:
+                throw new IllegalStateException("SolveState " + solveState.toString() + " is not implemented in CaptchaHandler#removeAssignedCaptcha");
         }
     }
 

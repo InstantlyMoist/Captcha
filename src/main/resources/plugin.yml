@@ -2,8 +2,9 @@ name: Captcha
 version: 1.04
 description: Bots are now the past
 main: me.kyllian.captcha.CaptchaPlugin
-api-version: 1.15
+api-version: '1.13'
 softdepend: [AuthMe]
+author: Kyllian
 
 commands:
   captcha:
