@@ -14,7 +14,7 @@ public class MapHandlerFactory {
 
     public MapHandler getMapHandler() {
         String version = Bukkit.getVersion();
-        if (version.contains("1.15") || version.contains("1.14") || version.contains("1.13")) return new MapHandlerNew(plugin);
+        if (version.contains("1.16") || version.contains("1.15") || version.contains("1.14") || version.contains("1.13")) return new MapHandlerNew(plugin);
         else return new MapHandlerOld(plugin);
     }
 }

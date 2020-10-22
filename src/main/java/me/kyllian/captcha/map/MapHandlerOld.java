@@ -47,12 +47,10 @@ public class MapHandlerOld implements MapHandler {
             Bukkit.getLogger().info("Captcha didn't find existing, predefined maps. Generating them, this may take some time...");
             World world = Bukkit.getWorlds().get(0);
             for (int i = 0; i != mapAmount - currentMapAmount; i++) {
+                MapView mapView = Bukkit.createMap(world);
                 try {
-                    Class bukkitClass = Class.forName("org.bukkit.Bukkit");
-                    Method createMapMethod = bukkitClass.getMethod("createMap", World.class);
-                    Object mapViewObject = createMapMethod.invoke(MapView.class, world);
-                    Bukkit.broadcastMessage(mapViewObject.getClass().getMethod("getId").invoke(mapViewObject).toString());
-                    maps.add(Integer.parseInt(mapViewObject.getClass().getMethod("getId").invoke(mapViewObject).toString()));
+                    Method method = mapView.getClass().getMethod("getId");
+                    maps.add(((Short)method.invoke(mapView)).intValue());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -66,7 +64,7 @@ public class MapHandlerOld implements MapHandler {
             }
         }
         maps.forEach(mapID -> {
-            ItemStack map = new ItemStack(Material.valueOf("MAP"));
+            ItemStack map = new ItemStack(Material.MAP);
             map.setDurability(mapID.shortValue());
             mapsUsing.put(map, false);
         });
@@ -82,11 +80,24 @@ public class MapHandlerOld implements MapHandler {
 
         mapsUsing.put(map, true);
 
-        MapView mapView = Bukkit.getMap(map.getDurability());
+        MapView finalView = null;
+        Class bukkitClass = null;
 
-        mapView.getRenderers().clear();
+        try {
+            bukkitClass = Class.forName("org.bukkit.Bukkit");
+            Method getMapInt = bukkitClass.getMethod("getMap", int.class);
+            finalView = (MapView) getMapInt.invoke(bukkitClass, new Object[] {map.getDurability()});
+        } catch (Exception exception) {
+            try {
+                Method getMapShort = bukkitClass.getMethod("getMap", short.class);
+                finalView = (MapView) getMapShort.invoke(bukkitClass, new Object[] {map.getDurability()});
+            } catch (Exception otherException) {
+                otherException.printStackTrace();
+            }
+        }
+        finalView.getRenderers().clear();
 
-        mapView.addRenderer(new MapRenderer() {
+        finalView.addRenderer(new MapRenderer() {
             boolean rendered = false;
             @Override
             public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
