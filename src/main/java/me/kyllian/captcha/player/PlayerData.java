@@ -36,6 +36,7 @@ public class PlayerData {
                 fileConfiguration = YamlConfiguration.loadConfiguration(file);
                 fileConfiguration.set("passed", false);
                 fileConfiguration.set("total-fails", 0);
+                fileConfiguration.set("last-pass", 0);
                 saveData();
             } else {
                 fileConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -83,6 +84,7 @@ public class PlayerData {
         if (solveState == SolveState.FAIL || solveState == SolveState.LEAVE) {
             fail();
         } else if (solveState == SolveState.OK) {
+            fileConfiguration.set("last-pass", System.currentTimeMillis());
             fileConfiguration.set("passed", true);
             saveData();
         }
@@ -93,6 +95,10 @@ public class PlayerData {
         fileConfiguration.set("passed", false);
         saveData();
         this.fails++;
+    }
+
+    public long getLastPass() {
+        return fileConfiguration.getLong("last-pass");
     }
 
     public void setBackupItem(ItemStack backupItem) {

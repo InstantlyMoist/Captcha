@@ -14,10 +14,12 @@ public class CaptchaHandler {
 
     private CaptchaPlugin plugin;
     private CaptchaFactory captchaFactory;
+    private long bootTime;
 
     public CaptchaHandler(CaptchaPlugin plugin) {
         this.plugin = plugin;
         captchaFactory = new CaptchaFactory(plugin);
+        bootTime = System.currentTimeMillis();
     }
 
     public void login(Player player) {
@@ -26,6 +28,8 @@ public class CaptchaHandler {
         Mode mode = Mode.valueOf(plugin.getConfig().getString("captcha-settings.mode"));
         if (mode == Mode.NONE) return;
         if (mode == Mode.FIRSTJOIN && (player.hasPlayedBefore() && playerData.hasPassed())) return;
+        if (mode == Mode.RESTART && bootTime < playerData.getLastPass()) return;
+        if (mode == Mode.AFTER && System.currentTimeMillis() - playerData.getLastPass() < plugin.getConfig().getInt("captcha-settings.after")) return;
         try {
             plugin.getCaptchaHandler().assignCaptcha(player);
         } catch (IllegalStateException exception) {
@@ -82,5 +86,9 @@ public class CaptchaHandler {
                 onlinePlayer.kickPlayer(plugin.getMessageHandler().getMessage("reload-kick"));
             }
         }
+    }
+
+    public long getBootTime() {
+        return bootTime;
     }
 }

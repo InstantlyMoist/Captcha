@@ -2,5 +2,5 @@ package me.kyllian.captcha.utilities;
 
 public enum Mode {
 
-    FIRSTJOIN, ALL, NONE
+    FIRSTJOIN, ALL, AFTER, RESTART, NONE
 }
