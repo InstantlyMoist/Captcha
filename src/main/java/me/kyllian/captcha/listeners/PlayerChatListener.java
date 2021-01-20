@@ -23,17 +23,21 @@ public class PlayerChatListener implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
-        if (!playerData.hasAssignedCaptcha()) return;
-        event.setCancelled(true);
-        switch (playerData.getAssignedCaptcha().getType()) {
-            case TEXTCAPTCHA:
-                if (event.getMessage().equals(playerData.getAssignedCaptcha().getAnswer())) {
-                    removeCaptcha(player, SolveState.OK);
+        if (playerData.hasAssignedCaptcha()) {
+            event.setCancelled(true);
+            switch (playerData.getAssignedCaptcha().getType()) {
+                case TEXTCAPTCHA:
+                    if (event.getMessage().equals(playerData.getAssignedCaptcha().getAnswer())) {
+                        removeCaptcha(player, SolveState.OK);
+                        break;
+                    }
+                default:
+                    removeCaptcha(player, SolveState.FAIL);
                     break;
-                }
-            default:
-                removeCaptcha(player, SolveState.FAIL);
-                break;
+            }
+        } else if (!playerData.hasMoved() && plugin.getConfig().getBoolean("captcha-settings.require-move-action")) {
+            player.sendMessage(plugin.getMessageHandler().getMessage("move"));
+            event.setCancelled(true);
         }
     }
 

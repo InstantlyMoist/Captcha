@@ -18,6 +18,7 @@ public class PlayerData {
     private CaptchaPlugin plugin;
 
     private Captcha assignedCaptcha;
+    private boolean moved;
     private ItemStack backupItem;
     private int fails;
     private BukkitTask delayedTask;
@@ -120,5 +121,13 @@ public class PlayerData {
 
     public boolean hasPassed() {
         return fileConfiguration.getBoolean("passed");
+    }
+
+    public boolean hasMoved() {
+        return moved;
+    }
+
+    public void setMoved(boolean moved) {
+        this.moved = moved;
     }
 }

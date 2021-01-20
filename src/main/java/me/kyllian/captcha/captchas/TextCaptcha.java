@@ -2,6 +2,7 @@ package me.kyllian.captcha.captchas;
 
 import me.kyllian.captcha.CaptchaPlugin;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 
 import javax.imageio.ImageIO;
@@ -70,6 +71,8 @@ public class TextCaptcha implements Captcha {
         }
 
         graphics.dispose();
+
+        if (plugin.getConfig().getBoolean("captcha-settings.reverse")) answer = StringUtils.reverse(answer);
     }
 
     public int getRandomCoordinate() {

@@ -21,6 +21,7 @@ public class PlayerMoveListener  implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
+        playerData.setMoved(true);
         if (!playerData.hasAssignedCaptcha()) return;
         if (event.getFrom().getBlockX() != event.getTo().getBlockX()
         || event.getFrom().getBlockY() != event.getTo().getBlockY()
