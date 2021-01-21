@@ -6,6 +6,7 @@ import me.kyllian.captcha.listeners.*;
 import me.kyllian.captcha.listeners.login.LoginListener;
 import me.kyllian.captcha.listeners.login.PlayerJoinListener;
 import me.kyllian.captcha.map.MapHandlerFactory;
+import me.kyllian.captcha.utilities.SafeArea;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,9 +14,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CaptchaPlugin extends JavaPlugin {
 
     private CaptchaHandler captchaHandler;
+    private FontHandler fontHandler;
     private MapHandler mapHandler;
     private MessageHandler messageHandler;
     private PlayerDataHandler playerDataHandler;
+    private SafeArea safeArea;
     private UpdateHandler updateHandler;
 
     @Override
@@ -29,9 +32,11 @@ public class CaptchaPlugin extends JavaPlugin {
         saveResource("background.png", false);
 
         captchaHandler = new CaptchaHandler(this);
+        fontHandler = new FontHandler(this);
         mapHandler = new MapHandlerFactory(this).getMapHandler();
         messageHandler = new MessageHandler(this);
         playerDataHandler = new PlayerDataHandler(this);
+        safeArea = new SafeArea(this);
         updateHandler = new UpdateHandler(this);
 
         loadListeners();
@@ -52,19 +57,26 @@ public class CaptchaPlugin extends JavaPlugin {
         new InventoryClickListener(this);
         new PlayerChatListener(this);
         new PlayerCommandPreprocessListener(this);
+        new PlayerDeathListener(this);
         new PlayerDropItemListener(this);
+        new PlayerInteractEntityListener(this);
         new PlayerInteractListener(this);
         new PlayerItemHeldListener(this);
         if (Bukkit.getPluginManager().getPlugin("AuthMe") != null) new LoginListener(this);
         else new PlayerJoinListener(this);
         new PlayerMoveListener(this);
         new PlayerQuitListener(this);
+        new PlayerRespawnListener(this);
         new PlayerSwapHandItemsListener(this);
 
     }
 
     public CaptchaHandler getCaptchaHandler() {
         return captchaHandler;
+    }
+
+    public FontHandler getFontHandler() {
+        return fontHandler;
     }
 
     public MapHandler getMapHandler() {
@@ -77,6 +89,10 @@ public class CaptchaPlugin extends JavaPlugin {
 
     public PlayerDataHandler getPlayerDataHandler() {
         return playerDataHandler;
+    }
+
+    public SafeArea getSafeArea() {
+        return safeArea;
     }
 
     public UpdateHandler getUpdateHandler() {

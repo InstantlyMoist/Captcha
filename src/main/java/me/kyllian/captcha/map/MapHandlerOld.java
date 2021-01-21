@@ -112,4 +112,9 @@ public class MapHandlerOld implements MapHandler {
     public void resetMap(ItemStack map) {
         mapsUsing.put(map, false);
     }
+
+    @Override
+    public FileConfiguration getMaps() {
+        return fileConfiguration;
+    }
 }

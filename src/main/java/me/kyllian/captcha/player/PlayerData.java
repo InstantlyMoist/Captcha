@@ -4,6 +4,7 @@ import me.kyllian.captcha.CaptchaPlugin;
 import me.kyllian.captcha.captchas.Captcha;
 import me.kyllian.captcha.captchas.SolveState;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -19,7 +20,9 @@ public class PlayerData {
 
     private Captcha assignedCaptcha;
     private boolean moved;
+    private boolean forced;
     private ItemStack backupItem;
+    private Location backupLocation;
     private int fails;
     private BukkitTask delayedTask;
 
@@ -129,5 +132,21 @@ public class PlayerData {
 
     public void setMoved(boolean moved) {
         this.moved = moved;
+    }
+
+    public Location getBackupLocation() {
+        return backupLocation;
+    }
+
+    public void setBackupLocation(Location backupLocation) {
+        this.backupLocation = backupLocation;
+    }
+
+    public boolean isForced() {
+        return forced;
+    }
+
+    public void setForced(boolean forced) {
+        this.forced = forced;
     }
 }

@@ -31,7 +31,7 @@ public class CaptchaHandler {
         if (mode == Mode.RESTART && bootTime < playerData.getLastPass()) return;
         if (mode == Mode.AFTER && System.currentTimeMillis() - playerData.getLastPass() < plugin.getConfig().getInt("captcha-settings.after")) return;
         try {
-            plugin.getCaptchaHandler().assignCaptcha(player);
+            assignCaptcha(player);
         } catch (IllegalStateException exception) {
             exception.printStackTrace();
         }
@@ -45,6 +45,8 @@ public class CaptchaHandler {
         Captcha captcha = captchaFactory.getCaptcha(player);
         playerData.setAssignedCaptcha(captcha);
         playerData.setBackupItem(player.getInventory().getItemInMainHand());
+        playerData.setBackupLocation(player.getLocation());
+        if (plugin.getSafeArea().getLocation() != null) player.teleport(plugin.getSafeArea().getLocation());
         captcha.send();
         new BukkitRunnable() {
             public void run() {
@@ -64,6 +66,7 @@ public class CaptchaHandler {
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         plugin.getMapHandler().resetMap(player.getInventory().getItemInMainHand());
         player.getInventory().setItemInMainHand(playerData.getBackupItem());
+        player.teleport(playerData.getBackupLocation());
         playerData.removeAssignedCaptcha();
         playerData.cancel();
         playerData.handleSolveState(solveState);
@@ -75,7 +78,9 @@ public class CaptchaHandler {
                 return;
             }
             this.assignCaptcha(player);
+            return;
         }
+        playerData.setForced(false);
     }
 
     public void removeAllCaptchas() {
@@ -86,9 +91,5 @@ public class CaptchaHandler {
                 onlinePlayer.kickPlayer(plugin.getMessageHandler().getMessage("reload-kick"));
             }
         }
-    }
-
-    public long getBootTime() {
-        return bootTime;
     }
 }

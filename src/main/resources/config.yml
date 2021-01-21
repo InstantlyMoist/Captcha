@@ -11,6 +11,7 @@ captcha-settings:
   mode: FIRSTJOIN # FIRSTJOIN, ALL, AFTER, RESTART, NONE
   op-override: false
   permission-override: false
+  random-font: false # You are required to add your own fonts!
   reverse: false # Reverse the answer, you may want to edit the join message accordingly
   require-move-action: true # Block chat messages when the player hasn't moved yet
   time: 600

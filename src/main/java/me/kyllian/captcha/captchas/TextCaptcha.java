@@ -59,7 +59,7 @@ public class TextCaptcha implements Captcha {
             }
         }
 
-        graphics.setFont(new Font("Arial", Font.PLAIN, 34));
+        graphics.setFont(plugin.getFontHandler().getFont());
 
         for (int i = 0; i != split.length; i++) {
             AffineTransform original = graphics.getTransform();
