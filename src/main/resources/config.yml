@@ -6,6 +6,8 @@ captcha-settings:
   after: 7200000 # Require a captcha after 2 hours after the last completed Captcha (Only applies when mode is equal to AFTER)
   attempts: 3
   color: false
+  commands-on-success: []
+  commands-on-fail: ["say %player% just failed the captcha"]
   lines: true
   maps: 1000
   mode: FIRSTJOIN # FIRSTJOIN, ALL, AFTER, RESTART, NONE

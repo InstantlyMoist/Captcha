@@ -73,6 +73,7 @@ public class CaptchaHandler {
         if (solveState == SolveState.LEAVE) return;
         player.sendMessage(plugin.getMessageHandler().getMessage(solveState == SolveState.OK ? "success" : "fail"));
         if (solveState == SolveState.FAIL) {
+            plugin.getConfig().getStringList("captcha-settings.commands-on-fail").stream().forEach(this::execute);
             if (playerData.getFails() >= plugin.getConfig().getInt("captcha-settings.attempts")) {
                 player.kickPlayer(plugin.getMessageHandler().getMessage("kick"));
                 return;
@@ -80,6 +81,7 @@ public class CaptchaHandler {
             this.assignCaptcha(player);
             return;
         }
+        plugin.getConfig().getStringList("captcha-settings.commands-on-success").stream().forEach(this::execute);
         playerData.setForced(false);
     }
 
@@ -91,5 +93,9 @@ public class CaptchaHandler {
                 onlinePlayer.kickPlayer(plugin.getMessageHandler().getMessage("reload-kick"));
             }
         }
+    }
+
+    public void execute(String command) {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
     }
 }
