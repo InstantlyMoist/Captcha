@@ -33,7 +33,6 @@ public class PlayerDeathListener implements Listener {
         while (iterator.hasNext()) {
             ItemStack drop = (ItemStack) iterator.next();
             if (drop.getItemMeta() instanceof MapMeta) {
-                Bukkit.broadcastMessage("Found map item in inventory");
                 MapMeta mapMeta = (MapMeta) drop.getItemMeta();
                 if (plugin.getMapHandler().getMaps().getIntegerList("maps").contains(mapMeta.getMapId())) iterator.remove();
             }
