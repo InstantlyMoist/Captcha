@@ -2,6 +2,7 @@ package me.kyllian.captcha.map;
 
 import me.kyllian.captcha.CaptchaPlugin;
 import me.kyllian.captcha.handlers.MapHandler;
+import me.kyllian.captcha.utilities.MapUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -48,12 +49,7 @@ public class MapHandlerOld implements MapHandler {
             World world = Bukkit.getWorlds().get(0);
             for (int i = 0; i != mapAmount - currentMapAmount; i++) {
                 MapView mapView = Bukkit.createMap(world);
-                try {
-                    Method method = mapView.getClass().getMethod("getId");
-                    maps.add(((Short)method.invoke(mapView)).intValue());
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+                maps.add(MapUtils.getMapId(mapView));
             }
             fileConfiguration.set("maps", maps);
             world.save();
@@ -69,6 +65,8 @@ public class MapHandlerOld implements MapHandler {
             mapsUsing.put(map, false);
         });
     }
+
+
 
     public void sendMap(Player player, BufferedImage image) {
         ItemStack map = mapsUsing.entrySet()

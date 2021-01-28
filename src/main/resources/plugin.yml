@@ -1,5 +1,5 @@
 name: Captcha
-version: 1.2
+version: 1.13
 description: Bots are now the past
 main: me.kyllian.captcha.CaptchaPlugin
 api-version: 1.13

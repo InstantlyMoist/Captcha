@@ -3,6 +3,7 @@ package me.kyllian.captcha.listeners;
 import me.kyllian.captcha.CaptchaPlugin;
 import me.kyllian.captcha.captchas.SolveState;
 import me.kyllian.captcha.player.PlayerData;
+import me.kyllian.captcha.utilities.MapUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +35,7 @@ public class PlayerDeathListener implements Listener {
             ItemStack drop = (ItemStack) iterator.next();
             if (drop.getItemMeta() instanceof MapMeta) {
                 MapMeta mapMeta = (MapMeta) drop.getItemMeta();
-                if (plugin.getMapHandler().getMaps().getIntegerList("maps").contains(mapMeta.getMapId())) iterator.remove();
+                if (plugin.getMapHandler().getMaps().getIntegerList("maps").contains(MapUtils.getMapId(mapMeta.getMapView()))) iterator.remove();
             }
         }
         playerData.setForced(true);
