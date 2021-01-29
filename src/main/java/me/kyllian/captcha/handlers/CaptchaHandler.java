@@ -8,6 +8,8 @@ import me.kyllian.captcha.player.PlayerData;
 import me.kyllian.captcha.utilities.Mode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class CaptchaHandler {
@@ -42,6 +44,7 @@ public class CaptchaHandler {
         if (playerData.hasAssignedCaptcha()) throw new IllegalStateException("The player is already solving a captcha");
         if ((player.isOp() && plugin.getConfig().getBoolean("captcha-settings.op-override"))
                 || player.hasPermission("captcha.override") && plugin.getConfig().getBoolean("captcha-settings.permission-override")) return;
+        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 255));
         Captcha captcha = captchaFactory.getCaptcha(player);
         playerData.setAssignedCaptcha(captcha);
         playerData.setBackupItem(player.getInventory().getItemInMainHand());
@@ -63,6 +66,7 @@ public class CaptchaHandler {
     }
 
     public void removeAssignedCaptcha(Player player, SolveState solveState) {
+        player.removePotionEffect(PotionEffectType.BLINDNESS);
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         plugin.getMapHandler().resetMap(player.getInventory().getItemInMainHand());
         player.getInventory().setItemInMainHand(playerData.getBackupItem());
@@ -73,7 +77,7 @@ public class CaptchaHandler {
         if (solveState == SolveState.LEAVE) return;
         player.sendMessage(plugin.getMessageHandler().getMessage(solveState == SolveState.OK ? "success" : "fail"));
         if (solveState == SolveState.FAIL) {
-            plugin.getConfig().getStringList("captcha-settings.commands-on-fail").stream().forEach(this::execute);
+            plugin.getConfig().getStringList("captcha-settings.commands-on-fail").stream().forEach(command -> execute(command, player));
             if (playerData.getFails() >= plugin.getConfig().getInt("captcha-settings.attempts")) {
                 player.kickPlayer(plugin.getMessageHandler().getMessage("kick"));
                 return;
@@ -81,7 +85,7 @@ public class CaptchaHandler {
             this.assignCaptcha(player);
             return;
         }
-        plugin.getConfig().getStringList("captcha-settings.commands-on-success").stream().forEach(this::execute);
+        plugin.getConfig().getStringList("captcha-settings.commands-on-success").stream().forEach(command -> execute(command, player));
         playerData.setForced(false);
     }
 
@@ -95,7 +99,7 @@ public class CaptchaHandler {
         }
     }
 
-    public void execute(String command) {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+    public void execute(String command, Player player) {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
     }
 }
