@@ -51,7 +51,7 @@ public class CaptchaHandler {
                 || player.hasPermission("captcha.override") && plugin.getConfig().getBoolean("captcha-settings.permission-override"))
             return;
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 255));
-        int heldSlot = plugin.getConfig().getInt("captch-settings.held-slot");
+        int heldSlot = plugin.getConfig().getInt("captcha-settings.held-slot");
         if (heldSlot != -1) player.getInventory().setHeldItemSlot(heldSlot);
         Captcha captcha = captchaFactory.getCaptcha(player);
         playerData.setAssignedCaptcha(captcha);
