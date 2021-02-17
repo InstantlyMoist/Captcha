@@ -1,0 +1,6 @@
+name: Captcha
+version: ${project.version}
+description: Bots are now the past
+main: me.kyllian.captcha.bungee.CaptchaPlugin
+author: Kyllian
+

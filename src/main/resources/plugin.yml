@@ -1,11 +1,14 @@
 name: Captcha
-version: 1.04
+version: ${project.version}
 description: Bots are now the past
-main: me.kyllian.captcha.CaptchaPlugin
-api-version: 1.15
+main: me.kyllian.captcha.spigot.CaptchaPlugin
+author: Kyllian
+api-version: 1.13
 softdepend: [AuthMe]
 
 commands:
   captcha:
     usage: /<command>
+    aliases:
+      - cap
     description: Main command of the Captcha p~lugin

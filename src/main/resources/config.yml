@@ -3,12 +3,19 @@
 # For support consider joining my discord: https://discord.gg/zgKr2YM
 
 captcha-settings:
+  after: 7200000 # Require a captcha after 2 hours after the last completed Captcha (Only applies when mode is equal to AFTER)
   attempts: 3
   color: false
+  commands-on-success: []
+  commands-on-fail: ["say %player% just failed the captcha"]
+  held-slot: -1 # Held slot, set to -1 if it doesn't matter
   lines: true
   maps: 1000
-  mode: FIRSTJOIN # FIRSTJOIN, ALL, NONE
+  mode: FIRSTJOIN # FIRSTJOIN, ALL, AFTER, RESTART, NONE
   op-override: false
   permission-override: false
+  random-font: false # You are required to add your own fonts!
+  reverse: false # Reverse the answer, you may want to edit the join message accordingly
+  require-move-action: true # Block chat messages when the player hasn't moved yet
   time: 600
   update-message: true
