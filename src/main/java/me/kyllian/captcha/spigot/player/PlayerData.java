@@ -25,6 +25,7 @@ public class PlayerData {
     private Location backupLocation;
     private int fails;
     private BukkitTask delayedTask;
+    private String executeAfterFinish;
 
     private File file;
     private FileConfiguration fileConfiguration;
@@ -148,5 +149,13 @@ public class PlayerData {
 
     public void setForced(boolean forced) {
         this.forced = forced;
+    }
+
+    public String getExecuteAfterFinish() {
+        return executeAfterFinish;
+    }
+
+    public void setExecuteAfterFinish(String executeAfterFinish) {
+        this.executeAfterFinish = executeAfterFinish;
     }
 }

@@ -6,7 +6,7 @@
 
     <groupId>me.kyllian.captcha</groupId>
     <artifactId>Captcha</artifactId>
-    <version>1.153</version>
+    <version>1.16</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -22,10 +22,6 @@
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
-                <includes>
-                    <include>plugin.yml</include>
-                    <include>config.yml</include>
-                </includes>
             </resource>
         </resources>
         <plugins>

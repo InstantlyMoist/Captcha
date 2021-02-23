@@ -22,5 +22,11 @@ public class PlayerCommandPreprocessListener implements Listener {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) event.setCancelled(true);
+        String command = event.getMessage().replace("/", "");
+        if (plugin.getConfig().getStringList("captcha-settings.captcha-protected-commands").contains(command.split(" ")[0])) {
+            plugin.getCaptchaHandler().assignCaptcha(player);
+            playerData.setExecuteAfterFinish(command);
+            event.setCancelled(true);
+        }
     }
 }

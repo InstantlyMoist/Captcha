@@ -95,6 +95,8 @@ public class CaptchaHandler {
             this.assignCaptcha(player);
             return;
         }
+        if (playerData.getExecuteAfterFinish() != null) player.performCommand(playerData.getExecuteAfterFinish());
+        playerData.setExecuteAfterFinish(null);
         plugin.getConfig().getStringList("captcha-settings.commands-on-success").stream().forEach(command -> execute(command, player));
         playerData.setForced(false);
     }
