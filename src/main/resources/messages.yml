@@ -1,5 +1,8 @@
+already-in-captcha: '&7This player is already doing a Captcha'
 fail: '&7You failed the Captcha'
-help: '&7/captcha reload'
+help:
+  - '&7/captcha reload'
+  - '&7/captcha (player)'
 join: '&7Please type the text on the map in order to verify you''re a human being'
 kick:
   - '&7You have been kicked!'
@@ -7,6 +10,7 @@ kick:
   - '&7Please try again'
 move: '&7You need to move in order to send a chat message!'
 no-permission: '&cYou don''t have permission'
+not-online: '&7This player is not online'
 player-only: '&7This command is only executable via a player'
 reload: '&7Reloaded Captcha'
 reload-kick: '&6You have lost connection to the server'

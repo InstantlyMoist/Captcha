@@ -1,6 +1,7 @@
 package me.kyllian.captcha.spigot.commands;
 
 import me.kyllian.captcha.spigot.CaptchaPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +13,7 @@ public class CaptchaCommand implements CommandExecutor {
 
     public CaptchaCommand(CaptchaPlugin plugin) {
         this.plugin = plugin;
+        plugin.getCommand("captcha").setExecutor(this);
     }
 
     @Override
@@ -42,6 +44,18 @@ public class CaptchaCommand implements CommandExecutor {
                 Player player = (Player) commandSender;
                 plugin.getSafeArea().setSafeLocation(player.getLocation());
                 player.sendMessage(plugin.getMessageHandler().getMessage("safe-area-set"));
+                return true;
+            }
+            Player player = Bukkit.getPlayerExact(args[0]);
+            if (player == null) {
+                commandSender.sendMessage(plugin.getMessageHandler().getMessage("not-online"));
+                return true;
+            }
+            try {
+                plugin.getCaptchaHandler().assignCaptcha(player);
+                return true;
+            } catch (IllegalStateException exc) {
+                commandSender.sendMessage(plugin.getMessageHandler().getMessage("already-in-captcha"));
                 return true;
             }
         }
