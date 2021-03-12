@@ -10,6 +10,7 @@ captcha-settings:
   color: false
   commands-on-success: []
   commands-on-fail: ["say %player% just failed the captcha"]
+  disable-damage: true
   held-slot: -1 # Held slot, set to -1 if it doesn't matter
   lines: true
   maps: 1000

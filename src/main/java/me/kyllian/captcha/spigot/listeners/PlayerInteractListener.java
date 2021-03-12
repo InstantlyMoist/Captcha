@@ -18,7 +18,7 @@ public class PlayerInteractListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void on(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) event.setCancelled(true);

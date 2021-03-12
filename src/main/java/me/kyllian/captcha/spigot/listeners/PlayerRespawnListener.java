@@ -19,7 +19,7 @@ public class PlayerRespawnListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
+    public void on(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.isForced()) {

@@ -56,6 +56,7 @@ public class CaptchaPlugin extends JavaPlugin {
     }
 
     public void loadListeners() {
+        new EntityDamageListener(this);
         new InventoryClickListener(this);
         new PlayerChatListener(this);
         new PlayerCommandPreprocessListener(this);

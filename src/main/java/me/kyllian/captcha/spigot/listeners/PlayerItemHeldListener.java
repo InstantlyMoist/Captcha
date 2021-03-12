@@ -18,7 +18,7 @@ public class PlayerItemHeldListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerItemHeld(PlayerItemHeldEvent event) {
+    public void on(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) event.setCancelled(true);

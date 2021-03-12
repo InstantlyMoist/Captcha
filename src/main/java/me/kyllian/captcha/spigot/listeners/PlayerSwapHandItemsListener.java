@@ -18,7 +18,7 @@ public class PlayerSwapHandItemsListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
+	public void on(PlayerSwapHandItemsEvent event) {
 		Player player = event.getPlayer();
 		PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
 		if (playerData.hasAssignedCaptcha()) event.setCancelled(true);

@@ -24,7 +24,7 @@ public class PlayerDeathListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
+    public void on(PlayerDeathEvent event) {
         Player player = event.getEntity();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (!playerData.hasAssignedCaptcha()) return;

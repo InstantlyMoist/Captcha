@@ -17,7 +17,7 @@ public class LoginListener implements Listener {
     }
 
     @EventHandler
-    public void onLogin(LoginEvent event) {
+    public void on(LoginEvent event) {
         Player player = event.getPlayer();
         plugin.getPlayerDataHandler().loadPlayerDataFromPlayer(player);
         plugin.getCaptchaHandler().login(player);

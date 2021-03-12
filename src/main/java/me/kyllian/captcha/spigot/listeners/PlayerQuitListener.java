@@ -19,7 +19,7 @@ public class PlayerQuitListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
+    public void on(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (!playerData.hasAssignedCaptcha()) return;

@@ -19,7 +19,7 @@ public class InventoryClickListener implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void on(InventoryClickEvent event) {
         HumanEntity entity = event.getWhoClicked();
         if (!(entity instanceof Player)) return;
         Player player = (Player) entity;

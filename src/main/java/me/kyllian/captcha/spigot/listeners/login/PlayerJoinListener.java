@@ -17,7 +17,7 @@ public class PlayerJoinListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void on(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         plugin.getPlayerDataHandler().loadPlayerDataFromPlayer(player);
         plugin.getCaptchaHandler().login(player);

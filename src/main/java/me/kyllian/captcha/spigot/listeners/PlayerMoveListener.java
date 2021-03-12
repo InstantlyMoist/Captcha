@@ -18,7 +18,7 @@ public class PlayerMoveListener  implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
+    public void on(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         playerData.setMoved(true);

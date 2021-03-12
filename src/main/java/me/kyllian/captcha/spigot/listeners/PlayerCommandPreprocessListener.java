@@ -18,7 +18,7 @@ public class PlayerCommandPreprocessListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+    public void on(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) event.setCancelled(true);

@@ -20,7 +20,7 @@ public class PlayerDropItemListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerItemDrop(PlayerDropItemEvent event) {
+    public void on(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) {
