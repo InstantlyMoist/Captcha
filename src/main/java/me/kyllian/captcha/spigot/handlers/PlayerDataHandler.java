@@ -42,14 +42,6 @@ public class PlayerDataHandler {
         return getPlayerDataFromUUID(player.getUniqueId());
     }
 
-    public void unloadPlayerDataFromUUID(UUID uuid) {
-        playerDataMap.remove(uuid);
-    }
-
-    public void unloadPlayerDataFromPlayer(Player player) {
-        playerDataMap.remove(player.getUniqueId());
-    }
-
     public File getPlayerFolder() {
         return playerFolder;
     }

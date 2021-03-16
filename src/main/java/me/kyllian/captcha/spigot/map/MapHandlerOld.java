@@ -2,6 +2,7 @@ package me.kyllian.captcha.spigot.map;
 
 import me.kyllian.captcha.spigot.CaptchaPlugin;
 import me.kyllian.captcha.spigot.handlers.MapHandler;
+import me.kyllian.captcha.spigot.utilities.HandUtils;
 import me.kyllian.captcha.spigot.utilities.MapUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -104,7 +105,7 @@ public class MapHandlerOld implements MapHandler {
                 rendered = true;
             }
         });
-        player.getInventory().setItemInMainHand(map);
+        HandUtils.setItemInHand(player, map);
     }
 
     public void resetMap(ItemStack map) {

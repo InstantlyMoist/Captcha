@@ -6,6 +6,7 @@ import me.kyllian.captcha.spigot.captchas.Captcha;
 import me.kyllian.captcha.spigot.captchas.CaptchaFactory;
 import me.kyllian.captcha.spigot.captchas.SolveState;
 import me.kyllian.captcha.spigot.player.PlayerData;
+import me.kyllian.captcha.spigot.utilities.HandUtils;
 import me.kyllian.captcha.spigot.utilities.Mode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -55,7 +56,7 @@ public class CaptchaHandler {
         if (heldSlot != -1) player.getInventory().setHeldItemSlot(heldSlot);
         Captcha captcha = captchaFactory.getCaptcha(player);
         playerData.setAssignedCaptcha(captcha);
-        playerData.setBackupItem(player.getInventory().getItemInMainHand());
+        playerData.setBackupItem(HandUtils.getItemInHand(player));
         playerData.setBackupLocation(player.getLocation());
         if (plugin.getSafeArea().getLocation() != null) player.teleport(plugin.getSafeArea().getLocation());
         captcha.send();
@@ -77,8 +78,8 @@ public class CaptchaHandler {
     public void removeAssignedCaptcha(Player player, SolveState solveState) {
         player.removePotionEffect(PotionEffectType.BLINDNESS);
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
-        plugin.getMapHandler().resetMap(player.getInventory().getItemInMainHand());
-        player.getInventory().setItemInMainHand(playerData.getBackupItem());
+        plugin.getMapHandler().resetMap(HandUtils.getItemInHand(player));
+        HandUtils.setItemInHand(player, playerData.getBackupItem());
         player.teleport(playerData.getBackupLocation());
         playerData.removeAssignedCaptcha();
         playerData.cancel();
