@@ -21,6 +21,7 @@ public class PlayerRespawnListener implements Listener {
     @EventHandler
     public void on(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
+        if (player.hasMetadata("NPC")) return;
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.isForced()) {
             new BukkitRunnable() {

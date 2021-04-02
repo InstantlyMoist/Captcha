@@ -20,6 +20,7 @@ public class PlayerSwapHandItemsListener implements Listener {
 	@EventHandler
 	public void on(PlayerSwapHandItemsEvent event) {
 		Player player = event.getPlayer();
+		if (player.hasMetadata("NPC")) return;
 		PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
 		if (playerData.hasAssignedCaptcha()) event.setCancelled(true);
 	}

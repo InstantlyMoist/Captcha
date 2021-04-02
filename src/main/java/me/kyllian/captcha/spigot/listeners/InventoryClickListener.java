@@ -23,6 +23,7 @@ public class InventoryClickListener implements Listener {
         HumanEntity entity = event.getWhoClicked();
         if (!(entity instanceof Player)) return;
         Player player = (Player) entity;
+        if (player.hasMetadata("NPC")) return;
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) event.setCancelled(true);
     }

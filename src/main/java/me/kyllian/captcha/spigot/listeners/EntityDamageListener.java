@@ -22,6 +22,7 @@ public class EntityDamageListener implements Listener {
         if (!(event.getEntity() instanceof Player)) return;
         if (!plugin.getConfig().getBoolean("captcha-settings.disable-damage")) return;
         Player player = (Player) event.getEntity();
+        if (player.hasMetadata("NPC")) return;
         if (player == null) return;
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData == null) return;

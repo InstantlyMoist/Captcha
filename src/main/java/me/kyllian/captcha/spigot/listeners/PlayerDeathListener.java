@@ -26,6 +26,7 @@ public class PlayerDeathListener implements Listener {
     @EventHandler
     public void on(PlayerDeathEvent event) {
         Player player = event.getEntity();
+        if (player.hasMetadata("NPC")) return;
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (!playerData.hasAssignedCaptcha()) return;
         player.getInventory().setItemInMainHand(playerData.getBackupItem());

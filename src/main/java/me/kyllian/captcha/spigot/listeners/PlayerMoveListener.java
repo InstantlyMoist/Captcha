@@ -20,6 +20,7 @@ public class PlayerMoveListener  implements Listener {
     @EventHandler
     public void on(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        if (player.hasMetadata("NPC")) return;
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         playerData.setMoved(true);
         if (!playerData.hasAssignedCaptcha()) return;
