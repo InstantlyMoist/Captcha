@@ -120,6 +120,7 @@ public class PlayerData {
     }
 
     public void cancel() {
+        if (delayedTask == null) return;
         delayedTask.cancel();
     }
 

@@ -9,6 +9,10 @@ kick:
   - ''
   - '&7Please try again'
 move: '&7You need to move in order to send a chat message!'
+no-maps:
+  - '&7You have been kicked'
+  - ''
+  - '&7All Captcha resources have been occupied...'
 no-permission: '&cYou don''t have permission'
 not-online: '&7This player is not online'
 player-only: '&7This command is only executable via a player'

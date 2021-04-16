@@ -16,6 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.NoSuchElementException;
 
 public class CaptchaHandler {
 
@@ -59,7 +60,12 @@ public class CaptchaHandler {
         playerData.setBackupItem(HandUtils.getItemInHand(player));
         playerData.setBackupLocation(player.getLocation());
         if (plugin.getSafeArea().getLocation() != null) player.teleport(plugin.getSafeArea().getLocation());
-        captcha.send();
+        try {
+            captcha.send();
+        } catch (NoSuchElementException exception) {
+            player.kickPlayer(plugin.getMessageHandler().getMessage("no-maps"));
+            return;
+        }
         new BukkitRunnable() {
             public void run() {
                 notifyBungee(player, true);
