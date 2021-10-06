@@ -33,15 +33,12 @@ public class CaptchaPlugin extends JavaPlugin {
         if (getResource("background.png") == null) {
             saveResource("background.png", false);
         }
-
         captchaHandler = new CaptchaHandler(this);
         fontHandler = new FontHandler(this);
         mapHandler = new MapHandlerFactory(this).getMapHandler();
         messageHandler = new MessageHandler(this);
         playerDataHandler = new PlayerDataHandler(this);
         safeArea = new SafeArea(this);
-        updateHandler = new UpdateHandler(this);
-
         loadListeners();
 
         new CaptchaCommand(this);
@@ -97,9 +94,5 @@ public class CaptchaPlugin extends JavaPlugin {
 
     public SafeArea getSafeArea() {
         return safeArea;
-    }
-
-    public UpdateHandler getUpdateHandler() {
-        return updateHandler;
     }
 }
