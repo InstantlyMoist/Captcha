@@ -30,8 +30,9 @@ public class CaptchaPlugin extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
-
-        saveResource("background.png", false);
+        if (getResource("background.png") == null) {
+            saveResource("background.png", false);
+        }
 
         captchaHandler = new CaptchaHandler(this);
         fontHandler = new FontHandler(this);
