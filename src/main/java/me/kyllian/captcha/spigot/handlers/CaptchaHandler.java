@@ -31,7 +31,6 @@ public class CaptchaHandler {
     }
 
     public void login(Player player) {
-        if (player.hasPermission("captcha.update")) plugin.getUpdateHandler().handleUpdateMessage(player);
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         Mode mode = Mode.valueOf(plugin.getConfig().getString("captcha-settings.mode"));
         if (mode == Mode.NONE) return;

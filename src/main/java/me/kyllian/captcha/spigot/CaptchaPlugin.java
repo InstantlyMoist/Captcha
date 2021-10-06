@@ -19,11 +19,9 @@ public class CaptchaPlugin extends JavaPlugin {
     private MessageHandler messageHandler;
     private PlayerDataHandler playerDataHandler;
     private SafeArea safeArea;
-    private UpdateHandler updateHandler;
 
     @Override
     public void onEnable() {
-        super.onEnable();
         Metrics metrics = new Metrics(this, 692);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "kyllian:captcha");
