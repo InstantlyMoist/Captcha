@@ -28,7 +28,7 @@ public class PlayerChatListener implements Listener {
             event.setCancelled(true);
             boolean matches = event.getMessage().equals(playerData.getAssignedCaptcha().getAnswer());
             CaptchaCompleteEvent completeEvent = new CaptchaCompleteEvent(
-                    player, playerData.getAssignedCaptcha(), event.getMessage(), matches ? SolveState.OK : SolveState.FAIL);
+                    true, player, playerData.getAssignedCaptcha(), event.getMessage(), matches ? SolveState.OK : SolveState.FAIL);
             Bukkit.getPluginManager().callEvent(completeEvent);
             if (completeEvent.isCancelled()) {
                 return;

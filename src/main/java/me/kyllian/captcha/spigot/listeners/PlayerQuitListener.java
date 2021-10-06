@@ -24,7 +24,7 @@ public class PlayerQuitListener implements Listener {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (!playerData.hasAssignedCaptcha()) return;
-        CaptchaCompleteEvent completeEvent = new CaptchaCompleteEvent(player, playerData.getAssignedCaptcha(), null, SolveState.LEAVE);
+        CaptchaCompleteEvent completeEvent = new CaptchaCompleteEvent(false, player, playerData.getAssignedCaptcha(), null, SolveState.LEAVE);
         Bukkit.getPluginManager().callEvent(completeEvent);
         plugin.getCaptchaHandler().removeAssignedCaptcha(player, SolveState.LEAVE);
     }
