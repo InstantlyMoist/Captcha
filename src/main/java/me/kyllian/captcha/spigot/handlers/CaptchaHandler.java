@@ -90,7 +90,9 @@ public class CaptchaHandler {
         playerData.removeAssignedCaptcha();
         playerData.cancel();
         playerData.handleSolveState(solveState);
-        notifyBungee(player, false);
+        if (plugin.isEnabled()) {
+            notifyBungee(player, false);
+        }
         if (solveState == SolveState.LEAVE) return;
         player.sendMessage(plugin.getMessageHandler().getMessage(solveState == SolveState.OK ? "success" : "fail"));
         if (solveState == SolveState.FAIL) {
