@@ -11,4 +11,5 @@ commands:
     usage: /<command>
     aliases:
       - cap
-    description: Main command of the Captcha p~lugin
+    description: Main command of the Captcha plugin
+    permission: captcha.command
