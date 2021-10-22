@@ -2,6 +2,7 @@ package me.kyllian.captcha.spigot.listeners;
 
 import me.kyllian.captcha.spigot.CaptchaPlugin;
 import me.kyllian.captcha.spigot.captchas.SolveState;
+import me.kyllian.captcha.spigot.events.CaptchaCompleteEvent;
 import me.kyllian.captcha.spigot.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,16 +26,14 @@ public class PlayerChatListener implements Listener {
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (playerData.hasAssignedCaptcha()) {
             event.setCancelled(true);
-            switch (playerData.getAssignedCaptcha().getType()) {
-                case TEXTCAPTCHA:
-                    if (event.getMessage().equals(playerData.getAssignedCaptcha().getAnswer())) {
-                        removeCaptcha(player, SolveState.OK);
-                        break;
-                    }
-                default:
-                    removeCaptcha(player, SolveState.FAIL);
-                    break;
+            boolean matches = event.getMessage().equals(playerData.getAssignedCaptcha().getAnswer());
+            CaptchaCompleteEvent completeEvent = new CaptchaCompleteEvent(
+                    true, player, playerData.getAssignedCaptcha(), event.getMessage(), matches ? SolveState.OK : SolveState.FAIL);
+            Bukkit.getPluginManager().callEvent(completeEvent);
+            if (completeEvent.isCancelled()) {
+                return;
             }
+            removeCaptcha(player, completeEvent.getState());
         } else if (!playerData.hasMoved() && plugin.getConfig().getBoolean("captcha-settings.require-move-action")) {
             player.sendMessage(plugin.getMessageHandler().getMessage("move"));
             event.setCancelled(true);

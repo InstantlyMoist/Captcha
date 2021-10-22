@@ -19,28 +19,24 @@ public class CaptchaPlugin extends JavaPlugin {
     private MessageHandler messageHandler;
     private PlayerDataHandler playerDataHandler;
     private SafeArea safeArea;
-    private UpdateHandler updateHandler;
 
     @Override
     public void onEnable() {
-        super.onEnable();
         Metrics metrics = new Metrics(this, 692);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "kyllian:captcha");
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
-
-        saveResource("background.png", false);
-
+        if (getResource("background.png") == null) {
+            saveResource("background.png", false);
+        }
         captchaHandler = new CaptchaHandler(this);
         fontHandler = new FontHandler(this);
         mapHandler = new MapHandlerFactory(this).getMapHandler();
         messageHandler = new MessageHandler(this);
         playerDataHandler = new PlayerDataHandler(this);
         safeArea = new SafeArea(this);
-        updateHandler = new UpdateHandler(this);
-
         loadListeners();
 
         new CaptchaCommand(this);
@@ -96,9 +92,5 @@ public class CaptchaPlugin extends JavaPlugin {
 
     public SafeArea getSafeArea() {
         return safeArea;
-    }
-
-    public UpdateHandler getUpdateHandler() {
-        return updateHandler;
     }
 }

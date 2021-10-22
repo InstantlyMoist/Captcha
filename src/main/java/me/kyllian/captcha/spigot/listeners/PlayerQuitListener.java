@@ -2,6 +2,7 @@ package me.kyllian.captcha.spigot.listeners;
 
 import me.kyllian.captcha.spigot.CaptchaPlugin;
 import me.kyllian.captcha.spigot.captchas.SolveState;
+import me.kyllian.captcha.spigot.events.CaptchaCompleteEvent;
 import me.kyllian.captcha.spigot.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,6 +24,8 @@ public class PlayerQuitListener implements Listener {
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerDataHandler().getPlayerDataFromPlayer(player);
         if (!playerData.hasAssignedCaptcha()) return;
+        CaptchaCompleteEvent completeEvent = new CaptchaCompleteEvent(false, player, playerData.getAssignedCaptcha(), null, SolveState.LEAVE);
+        Bukkit.getPluginManager().callEvent(completeEvent);
         plugin.getCaptchaHandler().removeAssignedCaptcha(player, SolveState.LEAVE);
     }
 }
