@@ -1,6 +1,6 @@
 # Captcha
 #
-# For support consider joining my discord: https://discord.gg/zgKr2YM
+# For support consider joining my discord: https://discord.gg/yfz2ZCwJR8
 
 captcha-settings:
   after: 7200000 # Require a captcha after 2 hours after the last completed Captcha (Only applies when mode is equal to AFTER)
