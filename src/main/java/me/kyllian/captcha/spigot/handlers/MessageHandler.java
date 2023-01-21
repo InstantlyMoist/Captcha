@@ -10,14 +10,10 @@ import java.util.List;
 
 public class MessageHandler {
 
-    private CaptchaPlugin plugin;
-
     private File file;
     private FileConfiguration fileConfiguration;
 
-
     public MessageHandler(CaptchaPlugin plugin) {
-        this.plugin = plugin;
         file = new File(plugin.getDataFolder(), "messages.yml");
         if (!file.exists()) plugin.saveResource("messages.yml", false);
         reload();

@@ -15,9 +15,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlayerData {
-
-    private CaptchaPlugin plugin;
-
     private Captcha assignedCaptcha;
     private boolean moved;
     private boolean forced;
@@ -31,7 +28,6 @@ public class PlayerData {
     private FileConfiguration fileConfiguration;
 
     public PlayerData(CaptchaPlugin plugin, Player player) {
-        this.plugin = plugin;
         file = new File(
                 plugin.getPlayerDataHandler().getPlayerFolder(),
                 player.getUniqueId().toString() + ".yml");

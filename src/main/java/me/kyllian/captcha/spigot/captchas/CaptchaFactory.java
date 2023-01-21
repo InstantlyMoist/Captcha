@@ -13,7 +13,7 @@ public class CaptchaFactory {
 
     public Captcha getCaptcha(Player player) {
         //TODO: Randomize this when more captcha's are added.
-        if (true) return new TextCaptcha(plugin, player);
-        return null;
+        return new TextCaptcha(plugin, player);
+        //return null;
     }
 }

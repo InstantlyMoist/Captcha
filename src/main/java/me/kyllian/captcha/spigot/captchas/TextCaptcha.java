@@ -1,8 +1,9 @@
 package me.kyllian.captcha.spigot.captchas;
 
 import me.kyllian.captcha.spigot.CaptchaPlugin;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.concurrent.ThreadLocalRandom;
 
+
+
 public class TextCaptcha implements Captcha {
 
     private CaptchaPlugin plugin;
@@ -19,12 +22,11 @@ public class TextCaptcha implements Captcha {
     private BufferedImage image;
     private String answer;
 
-    private final int OFFSET = 5;
-
     public TextCaptcha(CaptchaPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
+        // Generate random string:
         this.answer = RandomStringUtils.randomAlphabetic(5).toLowerCase();
         String[] split = answer.split("");
 

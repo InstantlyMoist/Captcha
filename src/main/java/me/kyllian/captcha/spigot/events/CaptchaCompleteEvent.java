@@ -17,8 +17,8 @@ public class CaptchaCompleteEvent extends PlayerEvent implements Cancellable {
     private final String chatInput;
     private SolveState state;
 
-    public CaptchaCompleteEvent(boolean async, Player who, Captcha captcha, String chatInput, SolveState state) {
-        super(who, async);
+    public CaptchaCompleteEvent(Player who, Captcha captcha, String chatInput, SolveState state) {
+        super(who);
         this.captcha = captcha;
         this.chatInput = chatInput;
         this.state = state;
