@@ -50,8 +50,12 @@ public class CaptchaCompleteEvent extends PlayerEvent implements Cancellable {
         cancelled = b;
     }
 
-    @Override
     public HandlerList getHandlers() {
         return HANDLER_LIST;
     }
+
+    public static HandlerList getHandlerList() {
+        return HANDLER_LIST;
+    }
+
 }
