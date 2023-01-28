@@ -66,8 +66,9 @@ public class CaptchaPlugin extends JavaPlugin {
         new PlayerInteractEntityListener(this);
         new PlayerInteractListener(this);
         new PlayerItemHeldListener(this);
-        if (Bukkit.getPluginManager().getPlugin("AuthMe") != null) new LoginListener(this);
-        else new PlayerJoinListener(this);
+        //if (Bukkit.getPluginManager().getPlugin("AuthMe") != null) new LoginListener(this);
+        //else new PlayerJoinListener(this);
+        new PlayerJoinListener(this);
         new PlayerMoveListener(this);
         new PlayerQuitListener(this);
         new PlayerRespawnListener(this);
